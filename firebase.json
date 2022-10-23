@@ -6,7 +6,10 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "cleanUrls": true
+    "cleanUrls": true,
+    "i18n": {
+      "root": "/languages"
+    }
   },
   "emulators": {
     "hosting": {
