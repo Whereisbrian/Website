@@ -5,26 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Whereisbrian - Homepage</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <script defer src="/js/bundle.js"></script>
+    <script defer src="js/bundle.js"></script>
+    <script defer src="js/functions.js"></script>
     <link rel="stylesheet" href="/css/main.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   </head>
+
   <body>
     <header>
-      <a href="#" class="logo">Whereisbrian</a>
+      <a href="/" class="logo">Whereisbrian</a>
         <nav>
-          <ul>
+          <ul id="Links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
+          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </a>
         </nav>
     </header>
+
     <div class="main">
       <h1 class="goal">Our goal:</h1>
+      <p>We want to help people to learn English. This is why we have decided to start this project.</p>
     </div>
   </body>
 </html>
