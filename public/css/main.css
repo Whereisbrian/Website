@@ -41,10 +41,12 @@ p {
     text-decoration: none;
     padding: 10px 20px;
     display: inline-block;
+    font-weight: bold;
 }
 
 .main p {
     font-size:18px;
+    font-weight: bold;
 }
 
 .main a {
