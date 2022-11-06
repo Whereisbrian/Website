@@ -5,30 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Whereisbrian - Contact</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <script defer src="/js/bundle.js"></script>
-    <script defer src="js/functions.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="js/bundle.js"></script>
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   </head>
-  
-  <body>
-    <header>
-      <a href="/" class="logo">Whereisbrian</a>
-        <nav>
-          <ul id="Links">
-            <li><a href="/">Accueil</a></li>
-            <li><a href="/about">À propos</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-          <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </a>
-        </nav>
-    </header>
+<div class="header">
 
-  </body>
-</html>
+  <!--Content before waves-->
+
+  <div class="inner-header flex">
+  <!--Just the logo.. Don't mind this-->
+  <h1>Whereisbrian.org</h1>
+  </div>
+  <!--Navigation-->
+  <div class="navbar">
+    <a href="/">Accueil</a>
+    <a href="about">À propos</a>
+    <a href="contact">Contact</a>
+  </div>
+  
+  <!--Waves Container-->
+  <div>
+  <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+  <defs>
+  <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+  </defs>
+  <g class="parallax">
+  <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+  <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+  <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+  <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+  </g>
+  </svg>
+</div>
+  <!--Waves end-->
+  
+  </div>
+  <!--Header ends-->
+  
+  <!--Content starts-->
+  <div class="content main">
+    <h1 class="goal">contact@whereisbrian.org</h1>
+    <p>Pour nous contacter, merci d'envoyer un email à cette adresse.</p>
+  </div>
+  <div class="content flex">
+    <p>Whereisbrian.org | Tous droits réservés </p>
+  </div>
+  <!--Content ends-->
