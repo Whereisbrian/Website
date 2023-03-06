@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/Whereisbrian/Website#readme",
   "dependencies": {
-    "firebase": "^9.12.1",
+    "firebase": "^9.17.2",
     "firebase-cli": "^1.2.0"
   },
   "devDependencies": {
