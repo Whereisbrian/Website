@@ -1,0 +1,11 @@
+---
+export interface Props {
+    title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<button class="btn" type="button">
+    <strong><a href="/login">{title}</a></strong>
+</button>

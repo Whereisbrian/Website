@@ -1,15 +1,12 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ],
-    "cleanUrls": true,
-    "i18n": {
-      "root": "/languages"
-    }
+    "cleanUrls": true
   },
   "emulators": {
     "hosting": {
