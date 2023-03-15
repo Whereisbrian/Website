@@ -4,7 +4,7 @@ export interface Props {
 }
 
 const { title } = Astro.props;
-import Spa from "../app/Spa.astro"
+import { Spa } from "astro-spa";
 import Firebase from "../components/Firebase.astro";
 import WIButton from "../components/WIButton.astro";
 ---
@@ -38,8 +38,9 @@ import WIButton from "../components/WIButton.astro";
 		</svg>
 		</div>
 		<!--Waves end-->
-		<Spa />
 		<Firebase />
+		<Spa prefetch={true} cache={true}/>
+		
 	</body>
 </html>
 <style is:global>
