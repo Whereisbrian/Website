@@ -7,7 +7,7 @@ import Card from '../components/Card.astro';
 	<main>
 		<h1>Nous <span class="text-gradient">conctacter</span></h1>
 		<p class="instructions">
-			Vous pouvez nous contacter depuis l'adresse <code>contact@whereisbrian.org</code>
+			Vous pouvez nous contacter depuis l'adresse <code><a href="mailto:contact@whereisbrian.org">contact@whereisbrian.org</a></code>
 		</p>
 		<ul role="list" class="link-card-grid">
 			<Card
@@ -30,6 +30,11 @@ import Card from '../components/Card.astro';
 		font-weight: 800;
 		margin: 0;
 		text-align: center;
+	}
+
+	a {
+		text-decoration: none;
+		color: inherit;
 	}
 	.text-gradient {
 		background-image: var(--accent-gradient);

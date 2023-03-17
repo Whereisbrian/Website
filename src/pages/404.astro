@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+---
+<meta name="robots" content="noindex" />
+<Layout title="Where Is Brian - 404">
+	<main>
+		<h1>Erreur <span class="text-gradient">404</span></h1>
+		<ul role="list" class="link-card-grid">
+			<Card
+				href="javascript:history.back()"
+				title="Retourner à la page précédente"
+				body="Vous avez peut-être fait une erreur de frappe dans l'URL. Vérifiez l'orthographe et réessayez."
+			/>
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1.5rem;
+		max-width: 60ch;
+	}
+	h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		margin: 0;
+		text-align: center;
+	}
+	.text-gradient {
+		background-image: var(--accent-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-size: 400%;
+		background-position: 0%;
+	}
+	.link-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
+		gap: 1rem;
+		padding: 0;
+	}
+</style>
