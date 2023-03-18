@@ -1,0 +1,5 @@
+---
+const { platform, username } = Astro.props;
+const [width, height] = [32, 32]
+---
+<a href={`https://${platform}.com/${username}`} target="_blank" aria-label={`Profil ${platform} de l'association`}><img src={`/${platform}.svg`} width={width} height={height} alt={platform}></a>

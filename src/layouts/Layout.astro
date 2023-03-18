@@ -6,7 +6,8 @@ export interface Props {
 const { title } = Astro.props;
 import { Spa } from "astro-spa";
 import Firebase from "../components/Firebase.astro";
-import WIButton from "../components/WIButton.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@ import WIButton from "../components/WIButton.astro";
 		<meta name="description" content="L'association Where Is Brian a pour objectif de rendre l'apprentissage de la langue anglaise plus facile et accessible à tous." />
 	</head>
 	<body>
-		<WIButton title="Connexion" href="/login"/>
+		<Header />
 		<slot />
 		<!--Waves Container-->
 		<div class="wave-container">
@@ -38,6 +39,7 @@ import WIButton from "../components/WIButton.astro";
 		</svg>
 		</div>
 		<!--Waves end-->
+		<Footer />
 		<Firebase />
 		<Spa prefetch={true} cache={true}/>
 		
