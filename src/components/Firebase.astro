@@ -1,8 +1,7 @@
 <script>
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, UserCredential, createUserWithEmailAndPassword, connectAuthEmulator } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
@@ -18,4 +17,97 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+
+if (process.env.NODE_ENV === 'development') {
+  connectAuthEmulator(auth, 'http://localhost:9099');
+}
+
+
+function initializePage() {
+  // Login and Signup
+  const emailInput = document.querySelector<HTMLInputElement>(".email");
+  const passwordInput = document.querySelector<HTMLInputElement>(".password");
+  const loginButton = document.querySelector<HTMLButtonElement>(".login");
+  const signupButton = document.querySelector<HTMLButtonElement>(".signup");
+
+  if (emailInput && passwordInput) {
+    if (loginButton) {
+      loginButton.addEventListener("click", () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential: UserCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log(user);
+            window.location.href = "/";
+          })
+          .catch((error: any) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // Display error message to user
+          });
+      });
+    }
+
+    if (signupButton) {
+      signupButton.addEventListener("click", () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential: UserCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log(user);
+            window.location.href = "/";
+          })
+          .catch((error: any) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage);
+            // Display error message to user
+          });
+      });
+    }
+  }
+
+  // Don't show login/signup if user is already logged in
+  function updateLoginButtonVisibility() {
+    // Get the user's authentication state from local storage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    // If the user is logged in, hide the login button
+    if (isLoggedIn) {
+      const headerLogin = document.querySelector<HTMLButtonElement>(".hlogin");
+      if (headerLogin) {
+        headerLogin.style.display = "none";
+      }
+    }
+  }
+
+  updateLoginButtonVisibility();
+
+  // Handle the authentication state change event
+  auth.onAuthStateChanged((user) => {
+    // If the user is logged in, set the isLoggedIn flag in local storage
+    if (user) {
+      localStorage.setItem("isLoggedIn", "true");
+    } else {
+      localStorage.removeItem("isLoggedIn");
+    }
+  });
+}
+
+// Call the function on page load
+document.addEventListener("DOMContentLoaded", function(event) {
+  initializePage();
+});
+
+// Call the function on the "mount" event
+window.addEventListener("mount", () => {
+  initializePage();
+});
+
+
 </script>

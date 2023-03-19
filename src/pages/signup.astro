@@ -4,17 +4,17 @@ import Card from '../components/Card.astro';
 import WIButton from '../components/WIButton.astro';
 ---
 
-<Layout title="Where Is Brian - Connexion">
+<Layout title="Where Is Brian - Inscription">
 	<main>
-		<h1><span class="text-gradient">Connexion</span></h1>
+		<h1><span class="text-gradient">Inscription</span></h1>
 		<p class="instructions">
-			Entrez vos identifiants pour vous connecter
+			Entrez vos identifiants pour vous inscrire
 		<input type="text" placeholder="Identifiant" class="email"/>
 		<input type="password" placeholder="Mot de passe" class="password"/>
-		<WIButton title="Connexion" customclass="login"/>
-		Vous n'avez pas de compte ? <a href="/signup">Créez-en un</a>
+		<WIButton title="Inscription" customclass="signup"/>
+        Déja inscrit ? <a href="/login">Connectez-vous</a>
 		</p>
-			
+		
         <ul role="list" class="link-card-grid">
 			<Card
 				href="/"
@@ -47,8 +47,7 @@ import WIButton from '../components/WIButton.astro';
 		text-align: center;
 		/* center the input */
 	}
-
-	a {
+    a {
         color: rgb(var(--accent));
         text-decoration: none;
     }

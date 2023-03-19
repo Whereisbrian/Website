@@ -1,25 +1,24 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
-import WIButton from '../components/WIButton.astro';
 ---
 
-<Layout title="Where Is Brian - Connexion">
+<Layout title="Where Is Brian - Exercices">
 	<main>
-		<h1><span class="text-gradient">Connexion</span></h1>
-		<p class="instructions">
-			Entrez vos identifiants pour vous connecter
-		<input type="text" placeholder="Identifiant" class="email"/>
-		<input type="password" placeholder="Mot de passe" class="password"/>
-		<WIButton title="Connexion" customclass="login"/>
-		Vous n'avez pas de compte ? <a href="/signup">Créez-en un</a>
+		<h1><span class="text-gradient">Exercices</span></h1>
+        <p class="instructions">
+			Ici vous pouvez vous <code>exercer</code>.
 		</p>
-			
-        <ul role="list" class="link-card-grid">
+		<ul role="list" class="link-card-grid">
+            <Card
+            href="/"
+            title="Accueil"
+            body="Accueil"
+            />
 			<Card
-				href="/"
-				title="Accueil"
-				body="Retourner à l'accueil"
+				href="/contact"
+				title="Contact"
+				body="Vous avez des questions ?"
 			/>
 		</ul>
 	</main>
@@ -37,21 +36,6 @@ import WIButton from '../components/WIButton.astro';
 		margin: 0;
 		text-align: center;
 	}
-	input {
-		display: block;
-		margin: 0.5rem 0;
-		padding: 0.5rem;
-		border: 1px solid rgba(var(--accent), 25%);
-		border-radius: 0.4rem;
-		/*center the text*/
-		text-align: center;
-		/* center the input */
-	}
-
-	a {
-        color: rgb(var(--accent));
-        text-decoration: none;
-    }
 	.text-gradient {
 		background-image: var(--accent-gradient);
 		-webkit-background-clip: text;
