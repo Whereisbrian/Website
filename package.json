@@ -1,11 +1,11 @@
 {
-  "name": "Website",
+  "name": "website",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.3.0",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently --kill-others \"astro dev\" \"firebase emulators:start --only auth,firestore\"",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node utils/cleanup",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -15,6 +15,7 @@
     "firebase": "^9.17.2"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "sass": "^1.59.2"
   }
 }

@@ -1,19 +1,25 @@
 ---
 export interface Props {
-    title: string;
-	href: string;
+  title: string;
+  href?: string;
+  customclass?: string;
 }
 
-const { title, href } = Astro.props;
+const { title, href, customclass } = Astro.props;
 ---
 
-<button class="btn">
-	<a href={href}>
-		<h2>
-			{title}
-		</h2>
-	</a>
+<button class={`btn ${customclass ? customclass : ""}`}>
+    {href ? (
+      <a href={href}>
+        <h2>{title}</h2>
+      </a>
+    ) : (
+    <a href="#submit">
+        <h2>{title}</h2>
+      </a>
+    )}
 </button>
+
 <style>
 .btn {
     margin: 0.67rem;

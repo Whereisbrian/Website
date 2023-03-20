@@ -1,9 +1,8 @@
 <script>
-
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-
+import { getAuth, signInWithEmailAndPassword, UserCredential, createUserWithEmailAndPassword, connectAuthEmulator } from "firebase/auth";
+import { getFirestore, collection, getDocs, connectFirestoreEmulator, addDoc } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
   authDomain: "whereisbrian-82f6e.firebaseapp.com",
@@ -18,4 +17,154 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
+
+if (process.env.NODE_ENV === 'development') {
+  connectAuthEmulator(auth, 'http://localhost:9099');
+  connectFirestoreEmulator(db, 'localhost', 8080);
+}
+
+function displayError(lastFormElement: HTMLElement, message: string) {
+  let errorMessage = lastFormElement.nextElementSibling as HTMLParagraphElement;
+  if (errorMessage && errorMessage.tagName === "P") {
+    errorMessage.textContent = message;
+  } else {
+    errorMessage = document.createElement("p");
+    errorMessage.textContent = message;
+    errorMessage.style.color = "red";
+    lastFormElement.parentNode?.insertBefore(errorMessage, lastFormElement.nextElementSibling);
+  }
+}
+
+function initializePage() {
+  // Login and Signup
+  const nameInput = document.querySelector<HTMLInputElement>(".name");
+  const firstNameInput = document.querySelector<HTMLInputElement>(".firstname");
+  const emailInput = document.querySelector<HTMLInputElement>(".email");
+  const passwordInput = document.querySelector<HTMLInputElement>(".password");
+  const passwordConfirmInput = document.querySelector<HTMLInputElement>(".password-confirm");
+  const englishLevelInput = document.querySelector<HTMLInputElement>(".english-level");
+  const loginButton = document.querySelector<HTMLButtonElement>(".login");
+  const signupButton = document.querySelector<HTMLButtonElement>(".signup");
+
+  if (emailInput && passwordInput) {
+    if (loginButton) {
+      loginButton.addEventListener("click", () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential: UserCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log(user);
+            window.spa.navigate("/")
+          })
+          .catch((error: any) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            //if the error is Firebase: Error (auth/invalid-email), then display the error message
+            if (errorCode === "auth/invalid-email") {
+              displayError(passwordInput, "L'adresse email n'est pas valide.");
+            } else if (errorCode === "auth/user-not-found") {
+              displayError(passwordInput, "L'adresse email n'existe pas.");
+            } else if (errorCode === "auth/wrong-password") {
+              displayError(passwordInput, "Le mot de passe est incorrect.");
+            }
+            // Display error message to user
+          });
+      });
+    }
+
+    if (signupButton) {
+      signupButton.addEventListener("click", () => {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        const passwordConfirm = passwordConfirmInput?.value;
+        if (password !== passwordConfirm) {
+          displayError(passwordConfirmInput!, "Les mots de passe ne correspondent pas.");
+          return;
+        }
+        createUserWithEmailAndPassword(auth, email, password)
+          .then((userCredential: UserCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            console.log(user); 
+            //add user to database
+            const userRef = collection(db, "users");
+            const userDoc = {
+              name: nameInput?.value,
+              firstname: firstNameInput?.value,
+              email: emailInput.value,
+              englishLevel: englishLevelInput?.value
+            };
+            addDoc(userRef, userDoc).then((docRef) => {
+              console.log("Document written with ID: ", docRef.id);
+            })
+              .catch((error) => {
+                console.error("Error adding document: ", error);
+              });
+            window.spa.navigate("/")
+          })
+          .catch((error: any) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            displayError(passwordConfirmInput!, errorMessage);
+            // Display error message to user
+          });
+      });
+    }
+  }
+
+  // Don't show login/signup if user is already logged in
+  function updateLoginElementsVisibility() {
+    // Get the user's authentication state from local storage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    // If the user is logged in, hide the login button
+    if (isLoggedIn) {
+      const headerLogin = document.querySelector<HTMLButtonElement>(".hlogin");
+      if (headerLogin) {
+        headerLogin.style.display = "none";
+      }
+      const logoutButton = document.querySelector<HTMLButtonElement>(".logout");
+      if (logoutButton) {
+        logoutButton.style.display = "block";
+        //add event listener to logout button
+        logoutButton.addEventListener("click", () => {
+          auth.signOut().then(() => {
+            // Sign-out successful.
+            window.spa.navigate("/")
+          }).catch((error) => {
+            // An error happened.
+            console.log(error);
+          });
+        });
+      }
+    }
+  }
+
+  updateLoginElementsVisibility();
+
+  // Handle the authentication state change event
+  auth.onAuthStateChanged((user) => {
+    // If the user is logged in, set the isLoggedIn flag in local storage
+    if (user) {
+      localStorage.setItem("isLoggedIn", "true");
+    } else {
+      localStorage.removeItem("isLoggedIn");
+    }
+  });
+}
+
+// Call the function on page load
+document.addEventListener("DOMContentLoaded", function(event) {
+  initializePage();
+});
+
+// Call the function on the "mount" event
+window.addEventListener("mount", () => {
+  initializePage();
+});
+
+
 </script>
