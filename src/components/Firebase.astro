@@ -1,170 +1,205 @@
 <script>
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getAuth, signInWithEmailAndPassword, UserCredential, createUserWithEmailAndPassword, connectAuthEmulator } from "firebase/auth";
-import { getFirestore, collection, getDocs, connectFirestoreEmulator, addDoc } from "firebase/firestore";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
-  authDomain: "whereisbrian-82f6e.firebaseapp.com",
-  projectId: "whereisbrian-82f6e",
-  storageBucket: "whereisbrian-82f6e.appspot.com",
-  messagingSenderId: "548883472518",
-  appId: "1:548883472518:web:70c0ff88ed39a4d4213107",
-  measurementId: "G-W92JLKEQCQ"
+    apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
+    authDomain: "whereisbrian-82f6e.firebaseapp.com",
+    projectId: "whereisbrian-82f6e",
+    storageBucket: "whereisbrian-82f6e.appspot.com",
+    messagingSenderId: "548883472518",
+    appId: "1:548883472518:web:70c0ff88ed39a4d4213107",
+    measurementId: "G-W92JLKEQCQ"
 };
+
+declare global {
+    interface Window {
+        spa: any;
+    }
+}
+
+let spa = window.spa;
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const db = getFirestore(app);
 
-if (process.env.NODE_ENV === 'development') {
-  connectAuthEmulator(auth, 'http://localhost:9099');
-  connectFirestoreEmulator(db, 'localhost', 8080);
-}
 
 function displayError(lastFormElement: HTMLElement, message: string) {
-  let errorMessage = lastFormElement.nextElementSibling as HTMLParagraphElement;
-  if (errorMessage && errorMessage.tagName === "P") {
-    errorMessage.textContent = message;
-  } else {
-    errorMessage = document.createElement("p");
-    errorMessage.textContent = message;
-    errorMessage.style.color = "red";
-    lastFormElement.parentNode?.insertBefore(errorMessage, lastFormElement.nextElementSibling);
-  }
+    let errorMessage = lastFormElement.nextElementSibling as HTMLParagraphElement;
+    if (errorMessage && errorMessage.tagName === "P") {
+        errorMessage.textContent = message;
+    } else {
+        errorMessage = document.createElement("p");
+        errorMessage.textContent = message;
+        errorMessage.style.color = "red";
+        lastFormElement.parentNode?.insertBefore(errorMessage, lastFormElement.nextElementSibling);
+    }
 }
 
-function initializePage() {
-  // Login and Signup
-  const nameInput = document.querySelector<HTMLInputElement>(".name");
-  const firstNameInput = document.querySelector<HTMLInputElement>(".firstname");
-  const emailInput = document.querySelector<HTMLInputElement>(".email");
-  const passwordInput = document.querySelector<HTMLInputElement>(".password");
-  const passwordConfirmInput = document.querySelector<HTMLInputElement>(".password-confirm");
-  const englishLevelInput = document.querySelector<HTMLInputElement>(".english-level");
-  const loginButton = document.querySelector<HTMLButtonElement>(".login");
-  const signupButton = document.querySelector<HTMLButtonElement>(".signup");
+async function initializePage() {
+    // Login and Signup
+    const nameInput = document.querySelector < HTMLInputElement > (".name");
+    const firstNameInput = document.querySelector < HTMLInputElement > (".firstname");
+    const emailInput = document.querySelector < HTMLInputElement > (".email");
+    const passwordInput = document.querySelector < HTMLInputElement > (".password");
+    const passwordConfirmInput = document.querySelector < HTMLInputElement > (".password-confirm");
+    const englishLevelInput = document.querySelector < HTMLInputElement > (".english-level");
+    const loginButton = document.querySelector < HTMLButtonElement > (".login");
+    const signupButton = document.querySelector < HTMLButtonElement > (".signup");
 
-  if (emailInput && passwordInput) {
-    if (loginButton) {
-      loginButton.addEventListener("click", () => {
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        signInWithEmailAndPassword(auth, email, password)
-          .then((userCredential: UserCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user);
-            window.spa.navigate("/")
-          })
-          .catch((error: any) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            //if the error is Firebase: Error (auth/invalid-email), then display the error message
-            if (errorCode === "auth/invalid-email") {
-              displayError(passwordInput, "L'adresse email n'est pas valide.");
-            } else if (errorCode === "auth/user-not-found") {
-              displayError(passwordInput, "L'adresse email n'existe pas.");
-            } else if (errorCode === "auth/wrong-password") {
-              displayError(passwordInput, "Le mot de passe est incorrect.");
-            }
-            // Display error message to user
-          });
-      });
-    }
+    if (emailInput && passwordInput) {
 
-    if (signupButton) {
-      signupButton.addEventListener("click", () => {
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        const passwordConfirm = passwordConfirmInput?.value;
-        if (password !== passwordConfirm) {
-          displayError(passwordConfirmInput!, "Les mots de passe ne correspondent pas.");
-          return;
+        const { getAuth, connectAuthEmulator } = await import("firebase/auth");
+        const auth = getAuth(app);
+        if (process.env.NODE_ENV === 'development') {
+          try {
+                connectAuthEmulator(auth, 'http://localhost:9099');
+              } catch (error) {
+                console.log("The emulator was already connected.");
+              }
         }
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential: UserCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            console.log(user); 
-            //add user to database
-            const userRef = collection(db, "users");
-            const userDoc = {
-              name: nameInput?.value,
-              firstname: firstNameInput?.value,
-              email: emailInput.value,
-              englishLevel: englishLevelInput?.value
-            };
-            addDoc(userRef, userDoc).then((docRef) => {
-              console.log("Document written with ID: ", docRef.id);
-            })
-              .catch((error) => {
-                console.error("Error adding document: ", error);
-              });
-            window.spa.navigate("/")
-          })
-          .catch((error: any) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            displayError(passwordConfirmInput!, errorMessage);
-            // Display error message to user
-          });
-      });
-    }
-  }
 
-  // Don't show login/signup if user is already logged in
-  function updateLoginElementsVisibility() {
+        if (loginButton) {
+            const { signInWithEmailAndPassword } = await import("firebase/auth");
+            loginButton.addEventListener("click", async () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    console.log(user);
+                    localStorage.setItem("isLoggedIn", "true");
+                    window.spa.navigate("/");
+                } catch (error: any) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    if (errorCode === "auth/invalid-email") {
+                        displayError(passwordInput, "L'adresse email n'est pas valide.");
+                    } else if (errorCode === "auth/user-not-found") {
+                        displayError(passwordInput, "L'adresse email n'existe pas.");
+                    } else if (errorCode === "auth/wrong-password") {
+                        displayError(passwordInput, "Le mot de passe est incorrect.");
+                    } else {
+                        console.log(errorCode);
+                        console.log(errorMessage);
+                        displayError(passwordInput, "Une erreur est survenue.");
+                    }
+                }
+            });
+        }
+
+        if (signupButton) {
+            const { createUserWithEmailAndPassword } = await import("firebase/auth");
+            const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
+            const db = getFirestore(app);
+            if (process.env.NODE_ENV === 'development') {
+                connectFirestoreEmulator(db, 'localhost', 8080);
+            }
+            signupButton.addEventListener("click", async () => {
+                const email = emailInput.value;
+                const password = passwordInput.value;
+                const passwordConfirm = passwordConfirmInput?.value;
+                if (password !== passwordConfirm) {
+                    displayError(passwordConfirmInput!, "Les mots de passe ne correspondent pas.");
+                    return;
+                }
+                try {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+                    console.log(user);
+                    const userRef = collection(db, "users");
+                    const userDoc = {
+                        name: nameInput?.value,
+                        firstname: firstNameInput?.value,
+                        email: emailInput.value,
+                        englishLevel: englishLevelInput?.value
+                    };
+                    addDoc(userRef, userDoc).then((docRef) => {
+                        console.log("Document written with ID: ", docRef.id);
+                    })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        });
+                    localStorage.setItem("isLoggedIn", "true");
+                    window.spa.navigate("/")
+                }
+
+                catch (error: any) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    if (errorCode === "auth/invalid-email") {
+                        displayError(passwordInput, "L'adresse email n'est pas valide.");
+                    }
+                    else if (errorCode === "auth/email-already-in-use") {
+                        displayError(passwordInput, "L'adresse email est déjà utilisée.");
+                    }
+                    else if (errorCode === "auth/weak-password") {
+                        displayError(passwordInput, "Le mot de passe doit contenir au moins 6 caractères.");
+                    }
+                    else {
+                        console.log(errorCode);
+                        console.log(errorMessage);
+                        displayError(passwordInput, "Une erreur est survenue.");
+                    }
+                }
+            });
+        }
+    }
+}
+
+// Don't show login/signup if user is already logged in
+async function updateLoginElementsVisibility() {
     // Get the user's authentication state from local storage
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
     // If the user is logged in, hide the login button
     if (isLoggedIn) {
-      const headerLogin = document.querySelector<HTMLButtonElement>(".hlogin");
-      if (headerLogin) {
-        headerLogin.style.display = "none";
-      }
-      const logoutButton = document.querySelector<HTMLButtonElement>(".logout");
-      if (logoutButton) {
-        logoutButton.style.display = "block";
-        //add event listener to logout button
-        logoutButton.addEventListener("click", () => {
-          auth.signOut().then(() => {
-            // Sign-out successful.
-            window.spa.navigate("/")
-          }).catch((error) => {
-            // An error happened.
-            console.log(error);
-          });
-        });
-      }
+        const headerLogin = document.querySelector < HTMLButtonElement > (".hlogin");
+        if (headerLogin) {
+            headerLogin.style.display = "none";
+        }
+        const logoutButton = document.querySelector < HTMLButtonElement > (".logout");
+        if (logoutButton) {
+            logoutButton.style.display = "block";
+            const { getAuth, connectAuthEmulator } = await import("firebase/auth");
+            const auth = getAuth(app);
+            if (process.env.NODE_ENV === 'development') {
+              try {
+                connectAuthEmulator(auth, 'http://localhost:9099');
+              } catch (error) {
+                console.log("The emulator was already connected.");
+              }
+            }
+            logoutButton.addEventListener("click", () => {
+                auth.signOut().then(() => {
+                    // Sign-out successful.
+                    localStorage.removeItem("isLoggedIn");
+                    window.spa.navigate("/login")
+                }).catch((error) => {
+                    // An error happened.
+                    console.log(error);
+                });
+            });
+        }
     }
-  }
-
-  updateLoginElementsVisibility();
-
-  // Handle the authentication state change event
-  auth.onAuthStateChanged((user) => {
-    // If the user is logged in, set the isLoggedIn flag in local storage
-    if (user) {
-      localStorage.setItem("isLoggedIn", "true");
-    } else {
-      localStorage.removeItem("isLoggedIn");
-    }
-  });
 }
+// Handle the authentication state change event
 
 // Call the function on page load
-document.addEventListener("DOMContentLoaded", function(event) {
-  initializePage();
+document.addEventListener("DOMContentLoaded", function (event) {
+    initializePage();
+    updateLoginElementsVisibility();
+
 });
 
 // Call the function on the "mount" event
 window.addEventListener("mount", () => {
-  initializePage();
+    initializePage();
+    updateLoginElementsVisibility();
+
 });
+
 
 
 </script>
