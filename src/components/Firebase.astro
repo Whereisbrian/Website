@@ -22,11 +22,23 @@ if (process.env.NODE_ENV === 'development') {
   connectAuthEmulator(auth, 'http://localhost:9099');
 }
 
+function displayError(lastFormElement: HTMLElement, message: string) {
+  let errorMessage = lastFormElement.nextElementSibling as HTMLParagraphElement;
+  if (errorMessage && errorMessage.tagName === "P") {
+    errorMessage.textContent = message;
+  } else {
+    errorMessage = document.createElement("p");
+    errorMessage.textContent = message;
+    errorMessage.style.color = "red";
+    lastFormElement.parentNode?.insertBefore(errorMessage, lastFormElement.nextElementSibling);
+  }
+}
 
 function initializePage() {
   // Login and Signup
   const emailInput = document.querySelector<HTMLInputElement>(".email");
   const passwordInput = document.querySelector<HTMLInputElement>(".password");
+  const passwordConfirmInput = document.querySelector<HTMLInputElement>(".password-confirm");
   const loginButton = document.querySelector<HTMLButtonElement>(".login");
   const signupButton = document.querySelector<HTMLButtonElement>(".signup");
 
@@ -45,7 +57,14 @@ function initializePage() {
           .catch((error: any) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage);
+            //if the error is Firebase: Error (auth/invalid-email), then display the error message
+            if (errorCode === "auth/invalid-email") {
+              displayError(passwordInput, "L'adresse email n'est pas valide.");
+            } else if (errorCode === "auth/user-not-found") {
+              displayError(passwordInput, "L'adresse email n'existe pas.");
+            } else if (errorCode === "auth/wrong-password") {
+              displayError(passwordInput, "Le mot de passe est incorrect.");
+            }
             // Display error message to user
           });
       });
@@ -55,6 +74,11 @@ function initializePage() {
       signupButton.addEventListener("click", () => {
         const email = emailInput.value;
         const password = passwordInput.value;
+        const passwordConfirm = passwordConfirmInput?.value;
+        if (password !== passwordConfirm) {
+          displayError(passwordConfirmInput!, "Les mots de passe ne correspondent pas.");
+          return;
+        }
         createUserWithEmailAndPassword(auth, email, password)
           .then((userCredential: UserCredential) => {
             // Signed in 
@@ -65,7 +89,7 @@ function initializePage() {
           .catch((error: any) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage);
+            displayError(passwordConfirmInput!, errorMessage);
             // Display error message to user
           });
       });
