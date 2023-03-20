@@ -1,11 +1,11 @@
 {
-  "name": "Website",
+  "name": "website",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "scripts": {
     "dev": "astro dev | firebase emulators:start --only auth",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node utils/cleanup",
     "preview": "astro preview",
     "astro": "astro"
   },
