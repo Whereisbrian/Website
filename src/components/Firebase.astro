@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, signInWithEmailAndPassword, UserCredential, createUserWithEmailAndPassword, connectAuthEmulator } from "firebase/auth";
-
+import { getFirestore, collection, getDocs, connectFirestoreEmulator, addDoc } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
   authDomain: "whereisbrian-82f6e.firebaseapp.com",
@@ -17,9 +17,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 if (process.env.NODE_ENV === 'development') {
   connectAuthEmulator(auth, 'http://localhost:9099');
+  connectFirestoreEmulator(db, 'localhost', 8080);
 }
 
 function displayError(lastFormElement: HTMLElement, message: string) {
@@ -36,9 +38,12 @@ function displayError(lastFormElement: HTMLElement, message: string) {
 
 function initializePage() {
   // Login and Signup
+  const nameInput = document.querySelector<HTMLInputElement>(".name");
+  const firstNameInput = document.querySelector<HTMLInputElement>(".firstname");
   const emailInput = document.querySelector<HTMLInputElement>(".email");
   const passwordInput = document.querySelector<HTMLInputElement>(".password");
   const passwordConfirmInput = document.querySelector<HTMLInputElement>(".password-confirm");
+  const englishLevelInput = document.querySelector<HTMLInputElement>(".english-level");
   const loginButton = document.querySelector<HTMLButtonElement>(".login");
   const signupButton = document.querySelector<HTMLButtonElement>(".signup");
 
@@ -52,7 +57,7 @@ function initializePage() {
             // Signed in 
             const user = userCredential.user;
             console.log(user);
-            window.location.href = "/";
+            window.spa.navigate("/")
           })
           .catch((error: any) => {
             const errorCode = error.code;
@@ -83,8 +88,22 @@ function initializePage() {
           .then((userCredential: UserCredential) => {
             // Signed in 
             const user = userCredential.user;
-            console.log(user);
-            window.location.href = "/";
+            console.log(user); 
+            //add user to database
+            const userRef = collection(db, "users");
+            const userDoc = {
+              name: nameInput?.value,
+              firstname: firstNameInput?.value,
+              email: emailInput.value,
+              englishLevel: englishLevelInput?.value
+            };
+            addDoc(userRef, userDoc).then((docRef) => {
+              console.log("Document written with ID: ", docRef.id);
+            })
+              .catch((error) => {
+                console.error("Error adding document: ", error);
+              });
+            window.spa.navigate("/")
           })
           .catch((error: any) => {
             const errorCode = error.code;
@@ -97,7 +116,7 @@ function initializePage() {
   }
 
   // Don't show login/signup if user is already logged in
-  function updateLoginButtonVisibility() {
+  function updateLoginElementsVisibility() {
     // Get the user's authentication state from local storage
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
@@ -107,10 +126,24 @@ function initializePage() {
       if (headerLogin) {
         headerLogin.style.display = "none";
       }
+      const logoutButton = document.querySelector<HTMLButtonElement>(".logout");
+      if (logoutButton) {
+        logoutButton.style.display = "block";
+        //add event listener to logout button
+        logoutButton.addEventListener("click", () => {
+          auth.signOut().then(() => {
+            // Sign-out successful.
+            window.spa.navigate("/")
+          }).catch((error) => {
+            // An error happened.
+            console.log(error);
+          });
+        });
+      }
     }
   }
 
-  updateLoginButtonVisibility();
+  updateLoginElementsVisibility();
 
   // Handle the authentication state change event
   auth.onAuthStateChanged((user) => {

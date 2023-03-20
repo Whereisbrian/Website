@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.2.0",
   "scripts": {
-    "dev": "astro dev | firebase emulators:start --only auth",
+    "dev": "concurrently --kill-others \"astro dev\" \"firebase emulators:start --only auth,firestore\"",
     "start": "astro dev",
     "build": "astro build && node utils/cleanup",
     "preview": "astro preview",
@@ -15,6 +15,7 @@
     "firebase": "^9.17.2"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "sass": "^1.59.2"
   }
 }
