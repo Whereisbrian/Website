@@ -1,0 +1,37 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Zip
+        run: |
+          cd dist
+          zip -r ../wib.zip .
+
+      - name: Create Release
+        run: gh release create ${{ github.ref }} "./wib.zip" -F changelog.md --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
