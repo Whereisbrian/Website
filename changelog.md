@@ -1,4 +1,4 @@
-# WIB - 0.3.0
+# WIB - 0.4.0
 
 ## 📄Blog support
 

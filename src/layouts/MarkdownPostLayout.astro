@@ -1,0 +1,43 @@
+---
+import Layout from "./Layout.astro";
+import "../styles/waves.scss";
+const { data, next } = Astro.props;
+const previous = "test"
+---
+<Layout title={data.title}>
+<h1>{data.title}</h1>
+<p class="description"><em>{data.description}</em></p>
+<div class="content">
+    <slot />
+    <p>{`Écrit par ${data.author} le ${new Date(data.pubDate).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}</p>
+	{data.image ? (<img src={data.image.url} width="300" alt={data.image.alt} />) : ("")}
+</div>
+</Layout>
+<style is:global>
+	.content {
+		line-height: 1.6;
+		margin: 1rem 0;
+        margin-right: 1rem;
+        margin-left: 1rem;
+		border: 1px solid rgba(var(--accent), 25%);
+		background-color: white;
+		padding: 1rem;
+		border-radius: 0.4rem;
+	}
+	.content code {
+		font-size: 0.875em;
+		font-weight: bold;
+		background: rgba(var(--accent), 12%);
+		color: rgb(var(--accent));
+		border-radius: 4px;
+		padding: 0.3em 0.45em;
+	}
+	.content strong {
+		color: rgb(var(--accent));
+	}
+    .description {
+        text-align: center;
+        margin: 0;
+        margin-bottom: 1rem;
+    }
+</style>
