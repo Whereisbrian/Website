@@ -4,22 +4,20 @@ import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 const allPosts = await getCollection("posts");
 ---
-<meta name="robots" content="noindex" />
 <Layout title="Where Is Brian - Blog">
 	<main>
 		<h1><span class="text-gradient">Blog</span></h1>
         <p class="instructions">
-            Le blog Where Is Brian est en cours de construction. Vous pouvez retrouver les articles sur le site de l'association <a href="/">Where Is Brian</a>.
-        <ul>
-            {allPosts.map((post: any) => <li><a href={"/posts/" + post.slug}>{post.data.title}</a></li>)}
+			Bienvenue sur le blog <a href="/">Where Is Brian</a> ! Découvrez nos articles sur notre association et suivez l'avancement de notre association. Nous partageons avec vous nos expériences, nos rencontres, nos découvertes et nos projets. Rejoignez-nous pour vivre une aventure unique !
+        <ul role="list" class="link-card-grid">
+            {allPosts.map((post: any) => (
+				<Card
+					href={"/posts/" + post.slug}
+					title={post.data.title}
+					body={post.data.description}
+				/>
+			))}
         </ul>
 		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="/"
-				title="Accueil"
-				body="Accueil"
-			/>
-		</ul>
 	</main>
 </Layout>

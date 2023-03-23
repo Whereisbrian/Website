@@ -1,18 +1,17 @@
 ---
-title: 'Premier post'
-pubDate: 2023-03-22
-description: 'Notre premier post sur ce blog'
+title: "Nos projets pour l'année à venir"
+pubDate: 2023-03-23
+description: "Découvrez nos projets ambitieux chez Where Is Brian !"
 author: 'Ulysse & Henri'
 tags: ["association", "objectifs"]
 ---
 
 ## Where Is Brian - Nos projets
 
-Bonjour tout le monde ! Bienvenue sur le site officiel de **Where Is Brian** !
+Bonjour à tous ! Nous sommes ravis de vous accueillir sur le site officiel de **Where Is Brian** ! Nous sommes actuellement en train de travailler sur la création de notre association qui a pour objectif de rendre l'anglais accessible à tous. Nous sommes encore en train de finaliser les démarches nécessaires, mais nous avons de grandes ambitions pour ce projet qui nous tient particulièrement à cœur.
 
-Comme vous le savez peut-être déjà WIB a été créé afin de rendre l'anglais plus accessible à tous. Ce projet nous tiens particulièrement à coeur et nous serions très excité de le voir grandir. 
+Nous prévoyons d'intégrer notre association avec Hello Asso pour faciliter les dons et les adhésions. Nous sommes également en train de travailler sur l'adaptation de notre site web afin de proposer des outils efficaces pour aider les jeunes à développer leur anglais.
 
-Ce ne sont pas les ambitions qui nous manque, nous avons l'intention d'adapter ce site de notre mieux afin d'épauler les jeunes voulant développer leur anglais.
-Outre le site web, nous voudrions organiser des sorties avec les participants volontaires, ces sorties permettront aux jeunes de pouvoir pratiquer leur anglais avec d'autres jeunes qui maîtrisent la langue. 
+En plus du site web, nous envisageons d'organiser des sorties pour les participants volontaires, afin de leur permettre de pratiquer leur anglais avec d'autres jeunes qui maîtrisent la langue.
 
-Ca sera tout pour ce premier post, merci d'avoir pris le temps de lire!
+Nous sommes plus que motivés pour voir grandir ce projet et aider un maximum de jeunes à développer leur anglais. Nous vous remercions de votre intérêt pour notre association et nous avons hâte de vous tenir informés de nos avancées à venir !

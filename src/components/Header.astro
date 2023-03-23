@@ -2,6 +2,7 @@
 import WIButton from "../components/WIButton.astro";
 ---
 <header>
+    <a href="/"><img src="/logo.svg" alt="logo" class="logo"/></a>
     <WIButton title="Connexion" href="/login" customclass={"hlogin"}/>
     <WIButton title="Blog" href="/blog"/>
     <img src="/logout.svg" alt="logout" class="logout" style="display: none;"/>
@@ -17,5 +18,11 @@ import WIButton from "../components/WIButton.astro";
         height: 2rem;
         margin-top: 1rem;
         cursor: pointer;
+    }
+    header .logo {
+        width: 3.7rem;
+        height: 3.7rem;
+        margin-left: 1rem;
+        margin-top: 0.5rem;
     }
 </style>

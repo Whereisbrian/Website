@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
@@ -18,9 +19,18 @@ export async function getStaticPaths() {
 const { tag } = Astro.params;
 const { posts } = Astro.props;
 ---
-<Layout title={tag ? tag : ""}>
-  <p>Posts tagged with {tag}</p>
-  <ul>
-    {posts.map((post: any) => <li><a href={"/posts/" + post.slug}>{post.data.title}</a></li>)}
+<meta name="robots" content="noindex" />
+<Layout title={`Where Is Brian - ${tag}`}>
+<main>
+  <h1>Posts ayant le tag <span class="text-gradient">{tag}</span></h1>
+  <ul role="list" class="link-card-grid">
+    {posts.map((post: any) => 
+    <Card
+					href={"/posts/" + post.slug}
+					title={post.data.title}
+					body={post.data.description}
+		/>  
+    )}
   </ul>
+</main>
 </Layout>
