@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/Card.astro';
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const uniqueTags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post: any) => post.data.tags.includes(tag));
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+<meta name="robots" content="noindex" />
+<Layout title={`Where Is Brian - ${tag}`}>
+<main>
+  <h1>Posts ayant le tag <span class="text-gradient">{tag}</span></h1>
+  <ul role="list" class="link-card-grid">
+    {posts.map((post: any) => 
+    <Card
+					href={"/posts/" + post.slug}
+					title={post.data.title}
+					body={post.data.description}
+		/>  
+    )}
+  </ul>
+</main>
+</Layout>
