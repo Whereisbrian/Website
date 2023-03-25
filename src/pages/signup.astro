@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import WIButton from '../components/WIButton.astro';
+import GoogleButton from '../components/GoogleButton.astro';
 import Form from '../components/Form.astro';
 ---
 
@@ -12,6 +13,7 @@ import Form from '../components/Form.astro';
 			Entrez vos identifiants pour vous inscrire
 		<Form signup={true}/>
 		<WIButton title="Inscription" customclass="signup"/>
+		<GoogleButton title="Inscription" />
         Déja inscrit ? <a href="/login">Connectez-vous</a>
 		</p>
 		
@@ -24,3 +26,12 @@ import Form from '../components/Form.astro';
 		</ul>
 	</main>
 </Layout>
+<style>
+.instructions {
+	display: flex;
+	flex-direction: column;
+}
+a {
+	width: fit-content;
+}
+</style>

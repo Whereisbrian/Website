@@ -47,17 +47,56 @@ async function initializePage() {
     const englishLevelInput = document.querySelector < HTMLInputElement > (".english-level");
     const loginButton = document.querySelector < HTMLButtonElement > (".login");
     const signupButton = document.querySelector < HTMLButtonElement > (".signup");
+    const googleButton = document.querySelector < HTMLButtonElement > (".google");
 
     if (emailInput && passwordInput) {
 
-        const { getAuth, connectAuthEmulator } = await import("firebase/auth");
+        const { getAuth, connectAuthEmulator, GoogleAuthProvider } = await import("firebase/auth");
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
         if (process.env.NODE_ENV === 'development') {
           try {
                 connectAuthEmulator(auth, 'http://localhost:9099');
               } catch (error) {
                 console.log("The emulator was already connected.");
               }
+        }
+
+        if (googleButton) {
+            const { signInWithPopup } = await import("firebase/auth");
+            googleButton.addEventListener("click", async () => {
+                try {
+                    const result = await signInWithPopup(auth, provider);
+                    const user = result.user;
+                    console.log(user);
+                    if (signupButton) {
+                        const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
+                        const db = getFirestore(app);
+                        if (process.env.NODE_ENV === 'development') {
+                            connectFirestoreEmulator(db, 'localhost', 8080);
+                        }
+                        const userRef = collection(db, "users");
+                        const userDoc = {
+                            name: user.displayName?.split(" ")[1],
+                            firstname: user.displayName?.split(" ")[0],
+                            email: user.email,
+                        }
+                        await addDoc(userRef, userDoc);
+                    }
+                    localStorage.setItem("isLoggedIn", "true");
+                    window.spa.navigate("/");
+                } catch (error: any) {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    const email = error.email;
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+                    console.log(errorCode);
+                    console.log(errorMessage);
+                    console.log(email);
+                    console.log(credential);
+                    displayError(passwordInput, "Une erreur est survenue.");
+                }
+            });
         }
 
         if (loginButton) {
@@ -90,7 +129,7 @@ async function initializePage() {
         }
 
         if (signupButton) {
-            const { createUserWithEmailAndPassword } = await import("firebase/auth");
+            const { createUserWithEmailAndPassword, sendEmailVerification } = await import("firebase/auth");
             const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
             const db = getFirestore(app);
             if (process.env.NODE_ENV === 'development') {
@@ -122,7 +161,12 @@ async function initializePage() {
                             console.error("Error adding document: ", error);
                         });
                     localStorage.setItem("isLoggedIn", "true");
-                    window.spa.navigate("/")
+                    sendEmailVerification(user!).then(() => {
+                        console.log("Email sent.");
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                    window.spa.navigate("/success")
                 }
 
                 catch (error: any) {

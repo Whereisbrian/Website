@@ -3,11 +3,14 @@ import Social from "./Social.astro";
 ---
 <footer>
     <Social platform="github" username="Whereisbrian" />
+    <Social platform="email" username="Whereisbrian" customhref={"mailto:contact@whereisbrian.org"}/>
 </footer>
 
-<style>
-    footer {
-        text-align: center;
-        padding: 10px;
-    }
+<style lang="scss">
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
 </style>
