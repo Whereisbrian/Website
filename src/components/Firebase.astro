@@ -129,7 +129,7 @@ async function initializePage() {
         }
 
         if (signupButton) {
-            const { createUserWithEmailAndPassword } = await import("firebase/auth");
+            const { createUserWithEmailAndPassword, sendEmailVerification } = await import("firebase/auth");
             const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
             const db = getFirestore(app);
             if (process.env.NODE_ENV === 'development') {
@@ -161,7 +161,12 @@ async function initializePage() {
                             console.error("Error adding document: ", error);
                         });
                     localStorage.setItem("isLoggedIn", "true");
-                    window.spa.navigate("/")
+                    sendEmailVerification(user!).then(() => {
+                        console.log("Email sent.");
+                    }).catch((error) => {
+                        console.log(error);
+                    });
+                    window.spa.navigate("/success")
                 }
 
                 catch (error: any) {

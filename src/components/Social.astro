@@ -1,5 +1,18 @@
 ---
-const { platform, username } = Astro.props;
+export interface Props {
+  platform: string;
+  username?: string;
+  customhref?: string;
+}
+const { platform, username, customhref } = Astro.props;
 const [width, height] = [32, 32]
 ---
-<a href={`https://${platform}.com/${username}`} target="_blank" aria-label={`Profil ${platform} de l'association`}><img src={`/${platform}.svg`} width={width} height={height} alt={platform}></a>
+<a href={customhref ? customhref : `https://${platform}.com/${username}`} target="_blank" aria-label={`Profil ${platform} de l'association`}>
+    <img src={`/${platform}.svg`} width={width} height={height} alt={platform} />
+</a>
+<style>
+    a {
+        display: inline-block;
+        margin: 0 0.5rem;
+    }
+</style>
