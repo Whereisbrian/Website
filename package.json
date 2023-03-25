@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently --kill-others \"tinacms dev\" \"astro dev\" \"firebase emulators:start --only auth,firestore\"",
     "start": "astro dev",
-    "build": "astro build && node utils/cleanup",
+    "build": "tinacms build && astro build && node utils/cleanup",
     "preview": "astro preview",
     "astro": "astro"
   },
