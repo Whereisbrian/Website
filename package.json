@@ -1,12 +1,12 @@
 {
   "name": "website",
   "type": "module",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "scripts": {
     "dev": "concurrently --kill-others \"tinacms dev\" \"astro dev\" \"firebase emulators:start --only auth,firestore\"",
     "start": "astro dev",
-    "build": "astro build && node utils/cleanup",
-    "preview": "astro preview",
+    "build": "tinacms build && astro build && node utils/cleanup",
+    "preview": "astro build && node utils/cleanup",
     "astro": "astro"
   },
   "dependencies": {
