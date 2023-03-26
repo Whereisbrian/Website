@@ -10,15 +10,15 @@ if (!fs.existsSync(assetsPath)) {
     fs.mkdirSync(assetsPath);
 }
 
-if (!fs.existsSync(postsPath)) {
-    fs.mkdirSync(postsPath);
-}
-
 // get all files in the directory
 const files = fs.readdirSync(assetsPath);
 
 // Copy all files to a new directory
 const newAssetsPath = './src/assets';
+
+if (!fs.existsSync(newAssetsPath)) {
+    fs.mkdirSync(newAssetsPath);
+}
 
 files.forEach((file) => {
   // create the source and destination paths
