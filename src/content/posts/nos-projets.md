@@ -4,6 +4,7 @@ pubDate: '2023-03-23T00:00:00.000Z'
 description: Découvrez nos projets ambitieux chez Where Is Brian !
 author: Ulysse & Henri
 tags:
+  - projets
   - association
   - objectifs
 ---
