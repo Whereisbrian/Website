@@ -5,6 +5,14 @@ import * as path from 'path';
 const assetsPath = './public/assets';
 const postsPath = './src/content/posts';
 
+// if the directories don't exist, create them
+if (!fs.existsSync(assetsPath)) {
+    fs.mkdirSync(assetsPath);
+}
+
+if (!fs.existsSync(postsPath)) {
+    fs.mkdirSync(postsPath);
+}
 
 // get all files in the directory
 const files = fs.readdirSync(assetsPath);
