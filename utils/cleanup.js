@@ -11,7 +11,8 @@ const files = fs.readdirSync(dirPath).filter(file => path.extname(file) === '.js
 files.forEach((file) => {
   const filePath = path.join(dirPath, file);
 
-  console.log('Cleaning up file:', filePath);
+  // console log cleanup process
+  console.log(`[${new Date().toLocaleTimeString()}] \x1b[34mCleaning up file:\x1b[0m ${filePath}`);
 
   // read the contents of the file
   const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -28,3 +29,6 @@ files.forEach((file) => {
   const comment = `// Licenses can be found in licenses.txt\n`;
   fs.writeFileSync(filePath, comment + modifiedContent, 'utf8');
 });
+
+// console log completion message
+console.log(`[${new Date().toLocaleTimeString()}] \x1b[32mCleanup completed successfully.\x1b[0m`);
