@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import WIButton from '../components/WIButton.astro';
-import GoogleButton from '../components/GoogleButton.astro';
+import SocialLoginButton from '../components/SocialLoginButton.astro';
 import Form from '../components/Form.astro';
 ---
 
@@ -13,7 +13,7 @@ import Form from '../components/Form.astro';
 			Entrez vos identifiants pour vous connecter
 		<Form />
 		<WIButton title="Connexion" customclass="login"/>
-		<GoogleButton title="Connexion" />
+		<SocialLoginButton path="/google.svg" />
 		Vous n'avez pas de compte ? <a href="/signup">Créez-en un</a>
 		</p>
 			
