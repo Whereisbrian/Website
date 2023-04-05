@@ -13,7 +13,7 @@ import "../styles/waves.scss";
 ---
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="bg-gray-100 font-poppins">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
@@ -23,7 +23,7 @@ import "../styles/waves.scss";
 		<meta name="description" content="L'association Where Is Brian a pour objectif de rendre l'apprentissage de la langue anglaise plus facile et accessible à tous." />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 	</head>
-	<body>
+	<body class="m-0">
 		<Header />
 		<slot />
 		<Waves />
@@ -52,13 +52,6 @@ import "../styles/waves.scss";
 	:root {
 		--accent: 1, 58, 237;
 		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), #2f0779 30%, white 60%);
-	}
-	body {
-  		margin:0;
-	}
-	html {
-		font-family: 'Poppins', sans-serif;
-		background-color: #F6F6F6;
 	}
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
