@@ -5,6 +5,6 @@ import desktop from "../assets/desktop.png";
 ---
 <div class="hero flex flex-col lg:flex-row justify-center items-center">
     <h1>Bienvenue sur <span class="text-gradient">WIB</span></h1>
-    <Image src={phone} alt="Phone" class={"lg:hidden"}/>
-    <Image src={desktop} alt="Desktop" class={"hidden lg:block"}/>
+    <Image src={phone} alt="Phone" class={"lg:hidden"} loading={"eager"}/>
+    <Image src={desktop} alt="Desktop" class={"hidden lg:block"} loading={"eager"}/>
 </div>
