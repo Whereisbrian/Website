@@ -1,20 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Hero from '../components/Hero.astro';
 ---
 
 <Layout title="Where Is Brian - Accueil">
 	<main>
-		<h1>Bienvenue sur <span class="text-gradient">WIB</span></h1>
-		<p class="instructions">
-			Dans l'optique de faciliter l'apprentissage de la <code>langue anglaise</code>, nous avons lancé ce projet afin de rendre cette expérience plus accessible et agréable pour tous.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="/blog"
-				title="Blog"
-				body="Découvrez nos articles"
-			/>
-		</ul>
+		<Hero />
 	</main>
 </Layout>
