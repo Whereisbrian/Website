@@ -23,7 +23,7 @@ import "../styles/waves.scss";
 		<meta name="description" content="L'association Where Is Brian a pour objectif de rendre l'apprentissage de la langue anglaise plus facile et accessible à tous." />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 	</head>
-	<body class="m-0 bg-gray-100 font-poppins dark:bg-slate-900">
+	<body class="m-0 bg-gray-100 font-poppins dark:bg-slate-900 scrollbar">
 		<Header />
 		<slot />
 		<Waves />
@@ -107,4 +107,33 @@ import "../styles/waves.scss";
 	h1, h2, h3, h4, h5, h6, p {
 		@apply dark:text-white;
 	}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 15px;
+    height: 20px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #f7f4ed;
+	@apply dark:bg-gray-800;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: #60a5fa;
+    border-radius: 100vh;
+    border: 3px solid #f6f7ed;
+	@apply dark:border-slate-800;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #2563eb;
+  }
+}
+
 </style>
