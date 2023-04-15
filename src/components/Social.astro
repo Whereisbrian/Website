@@ -7,6 +7,6 @@ export interface Props {
 const { platform, username, customhref } = Astro.props;
 const [width, height] = [32, 32]
 ---
-<a class="inline-block m-2" href={customhref ? customhref : `https://${platform}.com/${username}`} target="_blank" aria-label={`Profil ${platform} de l'association`}>
+<a class="inline-block m-2 dark:invert" href={customhref ? customhref : `https://${platform}.com/${username}`} target="_blank" aria-label={`Profil ${platform} de l'association`}>
     <img src={`/${platform}.svg`} width={width} height={height} alt={platform} />
 </a>

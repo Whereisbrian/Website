@@ -1,5 +1,5 @@
 # Where Is Brian?
-![Logo](public/logo.svg) \
+<img src="public/logo.svg" alt="Logo" style="width: 100px; height: 100px;"> \
 This repository contains the source code for the [Where Is Brian?](https://whereisbrian.org) website. \
 It is built using [Astro](https://astro.build) and [Firebase](https://firebase.google.com).
 ## 🚀 Project Structure
