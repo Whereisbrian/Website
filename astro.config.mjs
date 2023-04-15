@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from "@astrojs/sitemap";
-
 import tailwind from "@astrojs/tailwind";
+import partytown from "@astrojs/partytown";
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,7 +9,7 @@ export default defineConfig({
     assets: true
   },
   site: 'https://whereisbrian.org',
-  integrations: [sitemap(), tailwind()],
+  integrations: [sitemap(), tailwind(), partytown()],
   vite: {
     server: {
       watch: {
