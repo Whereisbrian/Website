@@ -21,7 +21,7 @@ const { posts } = Astro.props;
 ---
 <meta name="robots" content="noindex" />
 <Layout title={`Where Is Brian - ${tag}`}>
-<main>
+<main class="max-w-2xl">
   <h1>Posts ayant le tag <span class="text-gradient">{tag}</span></h1>
   <ul role="list" class="link-card-grid">
     {posts.map((post: any) => 

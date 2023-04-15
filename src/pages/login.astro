@@ -7,9 +7,9 @@ import Form from '../components/Form.astro';
 ---
 
 <Layout title="Where Is Brian - Connexion">
-	<main>
+	<main class="max-w-2xl">
 		<h1><span class="text-gradient">Connexion</span></h1>
-		<p class="instructions">
+		<p class="instructions flex flex-col">
 			Entrez vos identifiants pour vous connecter
 		<Form />
 		<WIButton title="Connexion" customclass="login"/>
@@ -26,12 +26,3 @@ import Form from '../components/Form.astro';
 		</ul>
 	</main>
 </Layout>
-<style>
-.instructions {
-	display: flex;
-	flex-direction: column;
-}
-a {
-	width: fit-content;
-}
-</style>

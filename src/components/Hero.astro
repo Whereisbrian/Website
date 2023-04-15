@@ -1,10 +1,19 @@
----
-import { Image } from "astro:assets";
-import phone from "../assets/phone.png";
-import desktop from "../assets/desktop.png";
----
-<div class="hero flex flex-col lg:flex-row justify-center items-center">
-    <h1>Bienvenue sur <span class="text-gradient">WIB</span></h1>
-    <Image src={phone} alt="Phone" class={"lg:hidden"} loading={"eager"}/>
-    <Image src={desktop} alt="Desktop" class={"hidden lg:block"} loading={"eager"}/>
+<div class="hero flex flex-col justify-center items-center w-full">
+    <h1 class="text-4xl sm:text-5xl">Where Is Brian</h1>
+    <h2 class="text-xl text-center mt-4">La <span class="text-gradient">meilleure</span> association pour apprendre l'anglais</h2>
+    <div class="flex flex-row mt-8 w-full justify-center items-center">
+        <div class="flex flex-col items-center">
+            <img src="/training.svg" class="mx-12 w-12 sm:mx-28 sm:w-28" alt="Exercices icon">
+            <span class="text-gradient sm:text-2xl"><b>Exercices</b></span>
+        </div>
+        <div class="flex flex-col items-center">
+            <img src="/language.svg" class="mx-12 w-12 sm:mx-28 sm:w-28" alt="Language icon">
+            <span class="text-gradient sm:text-2xl"><b>Cours</b></span>
+        </div>
+        <div class="flex flex-col items-center">
+            <img src="/groups.svg" class="mx-12 w-12 sm:mx-28 sm:w-28" alt="Groups icon">
+            <span class="text-gradient sm:text-2xl"><b>Sorties</b></span>
+        </div>
+    </div>
+    <a href="/signup" class="mt-8 sm:mt-16 bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded text-white transition-all duration-500 ease-in-out">Commencer</a>
 </div>
