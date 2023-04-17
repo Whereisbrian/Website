@@ -2,9 +2,9 @@
 import Arrow from "./Arrow.astro";
 ---
 <div class="hero flex flex-col justify-center items-center w-full h-[calc(100vh-5.5rem)]">
-    <h1 class="text-4xl sm:text-5xl">Where Is Brian</h1>
-    <h2 class="text-xl text-center mt-4">La <span class="text-gradient">meilleure</span> association pour apprendre l'anglais</h2>
-    <div class="flex flex-row mt-8 w-full justify-center items-center">
+    <h1 class="text-4xl sm:text-5xl animate-in slide-in-from-bottom">Where Is Brian</h1>
+    <h2 class="text-xl text-center mt-4 animate-in zoom-in duration-300">La <span class="text-gradient">meilleure</span> association pour apprendre l'anglais</h2>
+    <div class="flex flex-row mt-8 w-full justify-center items-center animate-in zoom-in duration-700">
         <div class="flex flex-col items-center">
             <img src="/training.svg" class="mx-12 w-12 h-12 sm:mx-28 sm:w-28 sm:h-28 dark:invert" alt="Exercices icon">
             <span class="text-gradient sm:text-2xl"><b>Exercices</b></span>
@@ -18,6 +18,6 @@ import Arrow from "./Arrow.astro";
             <span class="text-gradient sm:text-2xl"><b>Sorties</b></span>
         </div>
     </div>
-    <a href="/signup" class="mt-8 sm:mt-16 bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded text-white transition-all duration-500 ease-in-out">Commencer</a>
+    <a href="/signup" class="mt-8 sm:mt-16 bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded text-white transition-all duration-500 ease-in-out animate-in slide-in-from-top fade-in duration-1000">Commencer</a>
     <Arrow href="#section" label="Afficher la section suivante"/>
 </div>

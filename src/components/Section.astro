@@ -1,4 +1,4 @@
-<div id='section' class="flex sm:items-center flex-col sm:flex-row sm:md-32 xl:mx-64 m-8 rounded-lg outline outline-blue-600 bg-white dark:bg-slate-800">
+<div id='section' class="invisible flex sm:items-center flex-col sm:flex-row sm:md-32 xl:mx-64 m-8 rounded-lg outline outline-blue-600 bg-white dark:bg-slate-800">
     <div class="sm:w-1/2 max-sm:rounded-t sm:rounded-l-lg">
         <h3 class="text-black dark:text-white text-4xl m-4">Sorties</h3>
         <p class="text-black dark:text-white text-justify m-4">
@@ -12,7 +12,7 @@
     </div>   
 </div>
 
-<div class="flex sm:items-center flex-col-reverse sm:flex-row sm:md-32 xl:mx-64 m-8 rounded-lg outline outline-blue-600 bg-white dark:bg-slate-800">
+<div id="section2" class="invisible flex sm:items-center flex-col-reverse sm:flex-row sm:md-32 xl:mx-64 m-8 rounded-lg outline outline-blue-600 bg-white dark:bg-slate-800">
 
     <div class="sm:w-1/2 max-sm:rounded-b sm:rounded-l-lg flex flex-col items-center">
         <img src="/training.svg" class="w-32 h-32 invert-0 dark:invert" alt="Exercices icon">
@@ -26,3 +26,27 @@
         </p>
     </div>
 </div>
+<script>
+    const s1 = document.getElementById('section');
+    const s2 = document.getElementById('section2');
+
+    if(s1) {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+            s1.classList.add('animate-in', 'slide-in-from-bottom', 'zoom-in', 'fade-in', 'duration-300');
+            s1.classList.remove('invisible');
+        }
+        });
+        observer.observe(s1);
+    }
+
+    if(s2) {
+        const observer = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+            s2.classList.add('animate-in', 'slide-in-from-bottom', 'zoom-in', 'fade-in', 'duration-500');
+            s2.classList.remove('invisible');
+        }
+        });
+        observer.observe(s2);
+    }
+</script>
