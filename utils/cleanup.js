@@ -18,7 +18,13 @@ files.forEach((file) => {
   const fileContent = fs.readFileSync(filePath, 'utf8');
 
   // extract the removed content and write it to licenses.txt
-  const removedContent = fileContent.match(/\/\*\*[\s\S]*?\*\//g).join('\n');
+  let removedContent;
+
+  try {
+    removedContent = fileContent.match(/\/\*\*[\s\S]*?\*\//g).join('\n');
+  } catch (error) {
+    console.error('The file does not contain any license information.');
+  }
   const licensesFilePath = path.join(dirPath, '../licenses.txt');
   fs.writeFileSync(licensesFilePath, fileContent, { flag: 'a' });
 
