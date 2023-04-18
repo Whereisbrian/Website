@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # Log files
 *.log
+
+# Tina files
+.tina/__generated__
