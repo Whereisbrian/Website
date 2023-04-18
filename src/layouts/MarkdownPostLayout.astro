@@ -23,50 +23,52 @@ const nextPost = allPosts.find(
 ---
 
 <Layout title={data.title}>
-  <h1>{data.title}</h1>
-  <p class="description"><em>{data.description}</em></p>
-  <div class="content">
-    <slot />
-    <p>
+  <main class="animate-in fade-in duration-1000">
+    <h1>{data.title}</h1>
+    <p class="description"><em>{data.description}</em></p>
+    <div class="content">
+      <slot />
+      <p>
+        {
+          `Écrit par ${data.author} le ${new Date(
+            data.pubDate
+          ).toLocaleDateString("fr-FR", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}`
+        }
+      </p>
       {
-        `Écrit par ${data.author} le ${new Date(
-          data.pubDate
-        ).toLocaleDateString("fr-FR", {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        })}`
+        data.image ? (
+          <img src={data.image.url} width="300" alt={data.image.alt} />
+        ) : (
+          ""
+        )
       }
-    </p>
-    {
-      data.image ? (
-        <img src={data.image.url} width="300" alt={data.image.alt} />
-      ) : (
-        ""
-      )
-    }
-  </div>
-  <ul role="list" class="link-card-grid">
-    {
-      previousPost && (
-        <Card
-          title="Post précédent"
-          href={`/posts/${previousPost.slug}`}
-          body={previousPost.data.title}
-        />
-      )
-    }
-    {
-      nextPost && (
-        <Card
-          title="Post suivant"
-          href={`/posts/${nextPost.slug}`}
-          body={nextPost.data.title}
-        />
-      )
-    }
-  </ul>
+    </div>
+    <ul role="list" class="link-card-grid">
+      {
+        previousPost && (
+          <Card
+            title="Post précédent"
+            href={`/posts/${previousPost.slug}`}
+            body={previousPost.data.title}
+          />
+        )
+      }
+      {
+        nextPost && (
+          <Card
+            title="Post suivant"
+            href={`/posts/${nextPost.slug}`}
+            body={nextPost.data.title}
+          />
+        )
+      }
+    </ul>
+  </main>
 </Layout>
 <style is:global>
   .content {
