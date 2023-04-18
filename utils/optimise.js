@@ -20,6 +20,10 @@ const files = fs.readdirSync(assetsPath);
 // Copy all files to a new directory
 const newAssetsPath = "./src/assets";
 
+if (!fs.existsSync(newAssetsPath)) {
+  fs.mkdirSync(newAssetsPath);
+}
+
 files.forEach((file) => {
   // create the source and destination paths
   const srcPath = path.join(assetsPath, file);

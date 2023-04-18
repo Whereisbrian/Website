@@ -25,8 +25,10 @@ const nextPost = allPosts.find(
 <Layout title={data.title}>
   <main class="animate-in fade-in duration-1000">
     <h1>{data.title}</h1>
-    <p class="description"><em>{data.description}</em></p>
-    <div class="content">
+    <p class="m-0 mb-4 text-center"><em>{data.description}</em></p>
+    <div
+      class="content ml-4 mr-4 space-y-4 rounded-md border border-blue-400 bg-white p-4 dark:border-blue-600 dark:bg-gray-800"
+    >
       <slot />
       <p>
         {
@@ -48,7 +50,7 @@ const nextPost = allPosts.find(
         )
       }
     </div>
-    <ul role="list" class="link-card-grid">
+    <ul role="list" class="flex justify-between gap-4 p-0">
       {
         previousPost && (
           <Card
@@ -71,16 +73,11 @@ const nextPost = allPosts.find(
   </main>
 </Layout>
 <style is:global>
-  .content {
-    line-height: 1.6;
-    margin: 1rem 0;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    border: 1px solid rgba(var(--accent), 25%);
-    background-color: white;
-    padding: 1rem;
-    border-radius: 0.4rem;
-    @apply dark:border-gray-700 dark:bg-gray-800;
+  h2 {
+    font-size: 1.5em;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-weight: bold;
   }
   .content code {
     font-size: 0.875em;
@@ -92,17 +89,6 @@ const nextPost = allPosts.find(
   }
   .content strong {
     color: rgb(var(--accent));
-  }
-  .description {
-    text-align: center;
-    margin: 0;
-    margin-bottom: 1rem;
-  }
-  .link-card-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0;
   }
   .link-card {
     width: fit-content;

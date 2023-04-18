@@ -11,15 +11,13 @@ const { signup } = Astro.props;
       <input
         type="text"
         placeholder="Nom"
-        class="name my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 
-         focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        class="name my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
       />
 
       <input
         type="text"
         placeholder="Prénom"
-        class="firstname my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 
-         focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        class="firstname my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
       />
     </>
   )
@@ -27,13 +25,13 @@ const { signup } = Astro.props;
 <input
   type="text"
   placeholder="Adresse email"
-  class="email my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+  class="email my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 />
 
 <input
   type="password"
   placeholder="Mot de passe"
-  class="password my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+  class="password my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
 />
 
 {
@@ -42,8 +40,8 @@ const { signup } = Astro.props;
       <input
         type="password"
         placeholder="Confirmer le mot de passe"
-        class="password-confirm my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 
-         focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        class="password-confirm my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white
+         "
       />
 
       <label for="english-level" class="my-2 block">
@@ -52,8 +50,7 @@ const { signup } = Astro.props;
       <select
         name="english-level"
         id="english-level"
-        class="english-level my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 
-         focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+        class="english-level my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
       >
         <option value="basic">Basique</option>
         <option value="B1">B1</option>
@@ -64,14 +61,3 @@ const { signup } = Astro.props;
     </>
   )
 }
-
-<style>
-  input,
-  select {
-    @apply my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none;
-  }
-  input:focus {
-    @apply border-blue-500;
-    outline: none;
-  }
-</style>
