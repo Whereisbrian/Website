@@ -1,7 +1,7 @@
 {
   "name": "website",
   "type": "module",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "scripts": {
     "dev": "concurrently --kill-others \"tinacms dev\" \"astro dev\" \"firebase emulators:start --only auth,firestore\"",
     "start": "astro dev",
