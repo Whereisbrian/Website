@@ -5,6 +5,9 @@ export interface Props {
 const { path } = Astro.props;
 ---
 
-<button type="button" class="google bg-blue-400 hover:bg-blue-600 mr-4 py-2 px-2 w-12 h-12 mt-4 rounded-full text-white transition-all duration-500 ease-in-out" >
-  <img src={path} class="w-6 h-6 inline-block">
+<button
+  type="button"
+  class="google mr-4 mt-4 h-12 w-12 rounded-full bg-blue-400 px-2 py-2 text-white transition-all duration-500 ease-in-out hover:bg-blue-600"
+>
+  <img src={path} class="inline-block h-6 w-6" />
 </button>

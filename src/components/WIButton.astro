@@ -8,14 +8,20 @@ export interface Props {
 const { title, href, customclass } = Astro.props;
 ---
 
-<button class={`bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded transition-all duration-500 ease-in-out ${customclass ? customclass : ""}`}>
-    {href ? (
+<button
+  class={`bg-blue-400 hover:bg-blue-600 py-2 px-4 rounded transition-all duration-500 ease-in-out ${
+    customclass ? customclass : ""
+  }`}
+>
+  {
+    href ? (
       <a href={href}>
         <h2>{title}</h2>
       </a>
     ) : (
-    <a href="#submit" class="text-white">
+      <a href="#submit" class="text-white">
         <h2>{title}</h2>
       </a>
-    )}
+    )
+  }
 </button>

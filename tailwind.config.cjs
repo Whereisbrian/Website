@@ -10,7 +10,6 @@ module.exports = {
 	},
 	plugins: [
 	require("tailwindcss-animate"),
-	require('prettier-plugin-tailwindcss')
 	],
 	darkMode: 'class',
 }

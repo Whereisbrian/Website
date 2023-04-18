@@ -1,25 +1,17 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
 ---
 
 <Layout title="Where Is Brian - Exercices">
-	<main class="max-w-2xl">
-		<h1><span class="text-gradient">Exercices</span></h1>
-        <p class="instructions">
-			Ici vous pouvez vous <code>exercer</code>.
-		</p>
-		<ul role="list" class="link-card-grid">
-            <Card
-            href="/"
-            title="Accueil"
-            body="Accueil"
-            />
-			<Card
-				href="/contact"
-				title="Contact"
-				body="Vous avez des questions ?"
-			/>
-		</ul>
-	</main>
+  <main class="max-w-2xl">
+    <h1><span class="text-gradient">Exercices</span></h1>
+    <p class="instructions">
+      Ici vous pouvez vous <code>exercer</code>.
+    </p>
+    <ul role="list" class="link-card-grid">
+      <Card href="/" title="Accueil" body="Accueil" />
+      <Card href="/contact" title="Contact" body="Vous avez des questions ?" />
+    </ul>
+  </main>
 </Layout>

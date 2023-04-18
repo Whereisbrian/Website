@@ -8,72 +8,102 @@ const { data } = Astro.props;
 
 const allPosts = await getCollection("posts");
 // Sort allPosts by date of the post
-allPosts.sort((a, b) => new Date(a.data.pubDate).getTime() - new Date(b.data.pubDate).getTime());
+allPosts.sort(
+  (a, b) =>
+    new Date(a.data.pubDate).getTime() - new Date(b.data.pubDate).getTime()
+);
 // Check if there is a post previous to the current one and after
-const previousPost = allPosts.slice().reverse().find((post) => new Date(post.data.pubDate) < new Date(data.pubDate));
-const nextPost = allPosts.find((post) => new Date(post.data.pubDate) > new Date(data.pubDate));
+const previousPost = allPosts
+  .slice()
+  .reverse()
+  .find((post) => new Date(post.data.pubDate) < new Date(data.pubDate));
+const nextPost = allPosts.find(
+  (post) => new Date(post.data.pubDate) > new Date(data.pubDate)
+);
 ---
+
 <Layout title={data.title}>
-	<h1>{data.title}</h1>
-	<p class="description"><em>{data.description}</em></p>
-	<div class="content">
-	  <slot />
-	  <p>{`Écrit par ${data.author} le ${new Date(data.pubDate).toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}`}</p>
-	  {data.image ? (<img src={data.image.url} width="300" alt={data.image.alt} />) : ("")}
-	</div>
-	<ul role="list" class="link-card-grid">
-	{previousPost && (
-		<Card
-			title="Post précédent"
-			href={`/posts/${previousPost.slug}`}
-			body={previousPost.data.title}
-		/>
-	  )}
-	  {nextPost && (
-		<Card
-			title="Post suivant"
-			href={`/posts/${nextPost.slug}`}
-			body={nextPost.data.title}
-		/>
-	  )}
-	  </ul>
-  </Layout>
-<style is:global>
-	.content {
-		line-height: 1.6;
-		margin: 1rem 0;
-        margin-right: 1rem;
-        margin-left: 1rem;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-		@apply dark:bg-gray-800 dark:border-gray-700;
-	}
-	.content code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.content strong {
-		color: rgb(var(--accent));
-	}
-    .description {
-        text-align: center;
-        margin: 0;
-        margin-bottom: 1rem;
+  <h1>{data.title}</h1>
+  <p class="description"><em>{data.description}</em></p>
+  <div class="content">
+    <slot />
+    <p>
+      {
+        `Écrit par ${data.author} le ${new Date(
+          data.pubDate
+        ).toLocaleDateString("fr-FR", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        })}`
+      }
+    </p>
+    {
+      data.image ? (
+        <img src={data.image.url} width="300" alt={data.image.alt} />
+      ) : (
+        ""
+      )
     }
-	.link-card-grid {
-		display: flex;
-  		justify-content: space-between;
-		gap: 1rem;
-		padding: 0;
-	}
-	.link-card {
-		width: fit-content;
-		margin: auto;
-	}
+  </div>
+  <ul role="list" class="link-card-grid">
+    {
+      previousPost && (
+        <Card
+          title="Post précédent"
+          href={`/posts/${previousPost.slug}`}
+          body={previousPost.data.title}
+        />
+      )
+    }
+    {
+      nextPost && (
+        <Card
+          title="Post suivant"
+          href={`/posts/${nextPost.slug}`}
+          body={nextPost.data.title}
+        />
+      )
+    }
+  </ul>
+</Layout>
+<style is:global>
+  .content {
+    line-height: 1.6;
+    margin: 1rem 0;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border: 1px solid rgba(var(--accent), 25%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 0.4rem;
+    @apply dark:border-gray-700 dark:bg-gray-800;
+  }
+  .content code {
+    font-size: 0.875em;
+    font-weight: bold;
+    background: rgba(var(--accent), 12%);
+    color: rgb(var(--accent));
+    border-radius: 4px;
+    padding: 0.3em 0.45em;
+  }
+  .content strong {
+    color: rgb(var(--accent));
+  }
+  .description {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  .link-card-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0;
+  }
+  .link-card {
+    width: fit-content;
+    margin: auto;
+  }
 </style>

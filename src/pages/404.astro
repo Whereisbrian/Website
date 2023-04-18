@@ -1,17 +1,18 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
 ---
+
 <meta name="robots" content="noindex" />
 <Layout title="Where Is Brian - 404">
-	<main class="max-w-2xl">
-		<h1>Erreur <span class="text-gradient">404</span></h1>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="javascript:history.back()"
-				title="Retourner à la page précédente"
-				body="Vous avez peut-être fait une erreur de frappe dans l'URL. Vérifiez l'orthographe et réessayez."
-			/>
-		</ul>
-	</main>
+  <main class="max-w-2xl">
+    <h1>Erreur <span class="text-gradient">404</span></h1>
+    <ul role="list" class="link-card-grid">
+      <Card
+        href="javascript:history.back()"
+        title="Retourner à la page précédente"
+        body="Vous avez peut-être fait une erreur de frappe dans l'URL. Vérifiez l'orthographe et réessayez."
+      />
+    </ul>
+  </main>
 </Layout>
