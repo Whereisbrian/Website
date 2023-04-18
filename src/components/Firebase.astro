@@ -1,249 +1,273 @@
 <script>
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+  import { initializeApp } from "firebase/app";
+  import { getAnalytics } from "firebase/analytics";
 
-const firebaseConfig = {
+  const firebaseConfig = {
     apiKey: "AIzaSyDVfeIxG1YOikfsXVjBViYsz64LGxm3fe0",
     authDomain: "whereisbrian-82f6e.firebaseapp.com",
     projectId: "whereisbrian-82f6e",
     storageBucket: "whereisbrian-82f6e.appspot.com",
     messagingSenderId: "548883472518",
     appId: "1:548883472518:web:70c0ff88ed39a4d4213107",
-    measurementId: "G-W92JLKEQCQ"
-};
+    measurementId: "G-W92JLKEQCQ",
+  };
 
-declare global {
+  declare global {
     interface Window {
-        spa: any;
+      spa: any;
     }
-}
+  }
 
-let spa = window.spa;
+  let spa = window.spa;
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
-
-function displayError(lastFormElement: HTMLElement, message: string) {
-    let errorMessage = lastFormElement.nextElementSibling as HTMLParagraphElement;
+  function displayError(lastFormElement: HTMLElement, message: string) {
+    let errorMessage =
+      lastFormElement.nextElementSibling as HTMLParagraphElement;
     if (errorMessage && errorMessage.tagName === "P") {
-        errorMessage.textContent = message;
+      errorMessage.textContent = message;
     } else {
-        errorMessage = document.createElement("p");
-        errorMessage.textContent = message;
-        errorMessage.style.color = "red";
-        lastFormElement.parentNode?.insertBefore(errorMessage, lastFormElement.nextElementSibling);
+      errorMessage = document.createElement("p");
+      errorMessage.textContent = message;
+      errorMessage.style.color = "red";
+      lastFormElement.parentNode?.insertBefore(
+        errorMessage,
+        lastFormElement.nextElementSibling
+      );
     }
-}
+  }
 
-async function initializePage() {
+  async function initializePage() {
     // Login and Signup
-    const nameInput = document.querySelector < HTMLInputElement > (".name");
-    const firstNameInput = document.querySelector < HTMLInputElement > (".firstname");
-    const emailInput = document.querySelector < HTMLInputElement > (".email");
-    const passwordInput = document.querySelector < HTMLInputElement > (".password");
-    const passwordConfirmInput = document.querySelector < HTMLInputElement > (".password-confirm");
-    const englishLevelInput = document.querySelector < HTMLInputElement > (".english-level");
-    const loginButton = document.querySelector < HTMLButtonElement > (".login");
-    const signupButton = document.querySelector < HTMLButtonElement > (".signup");
-    const googleButton = document.querySelector < HTMLButtonElement > (".google");
+    const nameInput = document.querySelector<HTMLInputElement>(".name");
+    const firstNameInput =
+      document.querySelector<HTMLInputElement>(".firstname");
+    const emailInput = document.querySelector<HTMLInputElement>(".email");
+    const passwordInput = document.querySelector<HTMLInputElement>(".password");
+    const passwordConfirmInput =
+      document.querySelector<HTMLInputElement>(".password-confirm");
+    const englishLevelInput =
+      document.querySelector<HTMLInputElement>(".english-level");
+    const loginButton = document.querySelector<HTMLButtonElement>(".login");
+    const signupButton = document.querySelector<HTMLButtonElement>(".signup");
+    const googleButton = document.querySelector<HTMLButtonElement>(".google");
 
     if (emailInput && passwordInput) {
+      const { getAuth, connectAuthEmulator, GoogleAuthProvider } = await import(
+        "firebase/auth"
+      );
+      const auth = getAuth(app);
+      const provider = new GoogleAuthProvider();
+      if (process.env.NODE_ENV === "development") {
+        try {
+          connectAuthEmulator(auth, "http://localhost:9099");
+        } catch (error) {
+          console.log("The emulator was already connected.");
+        }
+      }
 
-        const { getAuth, connectAuthEmulator, GoogleAuthProvider } = await import("firebase/auth");
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-        if (process.env.NODE_ENV === 'development') {
+      if (googleButton) {
+        const { signInWithPopup } = await import("firebase/auth");
+        googleButton.addEventListener("click", async () => {
           try {
-                connectAuthEmulator(auth, 'http://localhost:9099');
-              } catch (error) {
-                console.log("The emulator was already connected.");
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            console.log(user);
+            if (signupButton) {
+              const {
+                connectFirestoreEmulator,
+                getFirestore,
+                collection,
+                addDoc,
+              } = await import("firebase/firestore/lite");
+              const db = getFirestore(app);
+              if (process.env.NODE_ENV === "development") {
+                connectFirestoreEmulator(db, "localhost", 8080);
               }
-        }
-
-        if (googleButton) {
-            const { signInWithPopup } = await import("firebase/auth");
-            googleButton.addEventListener("click", async () => {
-                try {
-                    const result = await signInWithPopup(auth, provider);
-                    const user = result.user;
-                    console.log(user);
-                    if (signupButton) {
-                        const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
-                        const db = getFirestore(app);
-                        if (process.env.NODE_ENV === 'development') {
-                            connectFirestoreEmulator(db, 'localhost', 8080);
-                        }
-                        const userRef = collection(db, "users");
-                        const userDoc = {
-                            name: user.displayName?.split(" ")[1],
-                            firstname: user.displayName?.split(" ")[0],
-                            email: user.email,
-                        }
-                        await addDoc(userRef, userDoc);
-                    }
-                    localStorage.setItem("isLoggedIn", "true");
-                    window.spa.navigate("/");
-                } catch (error: any) {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    const email = error.email;
-                    const credential = GoogleAuthProvider.credentialFromError(error);
-                    console.log(errorCode);
-                    console.log(errorMessage);
-                    console.log(email);
-                    console.log(credential);
-                    displayError(passwordInput, "Une erreur est survenue.");
-                }
-            });
-        }
-
-        if (loginButton) {
-            const { signInWithEmailAndPassword } = await import("firebase/auth");
-            loginButton.addEventListener("click", async () => {
-                const email = emailInput.value;
-                const password = passwordInput.value;
-                try {
-                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    console.log(user);
-                    localStorage.setItem("isLoggedIn", "true");
-                    window.spa.navigate("/");
-                } catch (error: any) {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    if (errorCode === "auth/invalid-email") {
-                        displayError(passwordInput, "L'adresse email n'est pas valide.");
-                    } else if (errorCode === "auth/user-not-found") {
-                        displayError(passwordInput, "L'adresse email n'existe pas.");
-                    } else if (errorCode === "auth/wrong-password") {
-                        displayError(passwordInput, "Le mot de passe est incorrect.");
-                    } else {
-                        console.log(errorCode);
-                        console.log(errorMessage);
-                        displayError(passwordInput, "Une erreur est survenue.");
-                    }
-                }
-            });
-        }
-
-        if (signupButton) {
-            const { createUserWithEmailAndPassword, sendEmailVerification } = await import("firebase/auth");
-            const { connectFirestoreEmulator, getFirestore, collection, addDoc } = await import("firebase/firestore/lite");
-            const db = getFirestore(app);
-            if (process.env.NODE_ENV === 'development') {
-                connectFirestoreEmulator(db, 'localhost', 8080);
+              const userRef = collection(db, "users");
+              const userDoc = {
+                name: user.displayName?.split(" ")[1],
+                firstname: user.displayName?.split(" ")[0],
+                email: user.email,
+              };
+              await addDoc(userRef, userDoc);
             }
-            signupButton.addEventListener("click", async () => {
-                const email = emailInput.value;
-                const password = passwordInput.value;
-                const passwordConfirm = passwordConfirmInput?.value;
-                if (password !== passwordConfirm) {
-                    displayError(passwordConfirmInput!, "Les mots de passe ne correspondent pas.");
-                    return;
-                }
-                try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    const user = userCredential.user;
-                    console.log(user);
-                    const userRef = collection(db, "users");
-                    const userDoc = {
-                        name: nameInput?.value,
-                        firstname: firstNameInput?.value,
-                        email: emailInput.value,
-                        englishLevel: englishLevelInput?.value
-                    };
-                    addDoc(userRef, userDoc).then((docRef) => {
-                        console.log("Document written with ID: ", docRef.id);
-                    })
-                        .catch((error) => {
-                            console.error("Error adding document: ", error);
-                        });
-                    localStorage.setItem("isLoggedIn", "true");
-                    sendEmailVerification(user!).then(() => {
-                        console.log("Email sent.");
-                    }).catch((error) => {
-                        console.log(error);
-                    });
-                    window.spa.navigate("/success")
-                }
+            localStorage.setItem("isLoggedIn", "true");
+            window.spa.navigate("/");
+          } catch (error: any) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            const email = error.email;
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(errorCode);
+            console.log(errorMessage);
+            console.log(email);
+            console.log(credential);
+            displayError(passwordInput, "Une erreur est survenue.");
+          }
+        });
+      }
 
-                catch (error: any) {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    if (errorCode === "auth/invalid-email") {
-                        displayError(passwordInput, "L'adresse email n'est pas valide.");
-                    }
-                    else if (errorCode === "auth/email-already-in-use") {
-                        displayError(passwordInput, "L'adresse email est déjà utilisée.");
-                    }
-                    else if (errorCode === "auth/weak-password") {
-                        displayError(passwordInput, "Le mot de passe doit contenir au moins 6 caractères.");
-                    }
-                    else {
-                        console.log(errorCode);
-                        console.log(errorMessage);
-                        displayError(passwordInput, "Une erreur est survenue.");
-                    }
-                }
-            });
+      if (loginButton) {
+        const { signInWithEmailAndPassword } = await import("firebase/auth");
+        loginButton.addEventListener("click", async () => {
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          try {
+            const userCredential = await signInWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            const user = userCredential.user;
+            console.log(user);
+            localStorage.setItem("isLoggedIn", "true");
+            window.spa.navigate("/");
+          } catch (error: any) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (errorCode === "auth/invalid-email") {
+              displayError(passwordInput, "L'adresse email n'est pas valide.");
+            } else if (errorCode === "auth/user-not-found") {
+              displayError(passwordInput, "L'adresse email n'existe pas.");
+            } else if (errorCode === "auth/wrong-password") {
+              displayError(passwordInput, "Le mot de passe est incorrect.");
+            } else {
+              console.log(errorCode);
+              console.log(errorMessage);
+              displayError(passwordInput, "Une erreur est survenue.");
+            }
+          }
+        });
+      }
+
+      if (signupButton) {
+        const { createUserWithEmailAndPassword, sendEmailVerification } =
+          await import("firebase/auth");
+        const { connectFirestoreEmulator, getFirestore, collection, addDoc } =
+          await import("firebase/firestore/lite");
+        const db = getFirestore(app);
+        if (process.env.NODE_ENV === "development") {
+          connectFirestoreEmulator(db, "localhost", 8080);
         }
+        signupButton.addEventListener("click", async () => {
+          const email = emailInput.value;
+          const password = passwordInput.value;
+          const passwordConfirm = passwordConfirmInput?.value;
+          if (password !== passwordConfirm) {
+            displayError(
+              passwordConfirmInput!,
+              "Les mots de passe ne correspondent pas."
+            );
+            return;
+          }
+          try {
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            const user = userCredential.user;
+            console.log(user);
+            const userRef = collection(db, "users");
+            const userDoc = {
+              name: nameInput?.value,
+              firstname: firstNameInput?.value,
+              email: emailInput.value,
+              englishLevel: englishLevelInput?.value,
+            };
+            addDoc(userRef, userDoc)
+              .then((docRef) => {
+                console.log("Document written with ID: ", docRef.id);
+              })
+              .catch((error) => {
+                console.error("Error adding document: ", error);
+              });
+            localStorage.setItem("isLoggedIn", "true");
+            sendEmailVerification(user!)
+              .then(() => {
+                console.log("Email sent.");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+            window.spa.navigate("/success");
+          } catch (error: any) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            if (errorCode === "auth/invalid-email") {
+              displayError(passwordInput, "L'adresse email n'est pas valide.");
+            } else if (errorCode === "auth/email-already-in-use") {
+              displayError(passwordInput, "L'adresse email est déjà utilisée.");
+            } else if (errorCode === "auth/weak-password") {
+              displayError(
+                passwordInput,
+                "Le mot de passe doit contenir au moins 6 caractères."
+              );
+            } else {
+              console.log(errorCode);
+              console.log(errorMessage);
+              displayError(passwordInput, "Une erreur est survenue.");
+            }
+          }
+        });
+      }
     }
-}
+  }
 
-// Don't show login/signup if user is already logged in
-async function updateLoginElementsVisibility() {
+  // Don't show login/signup if user is already logged in
+  async function updateLoginElementsVisibility() {
     // Get the user's authentication state from local storage
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
     // If the user is logged in, hide the login button
     if (isLoggedIn) {
-        const headerLogin = document.querySelector < HTMLButtonElement > (".hlogin");
-        if (headerLogin) {
-            headerLogin.style.display = "none";
+      const headerLogin = document.querySelector<HTMLButtonElement>(".hlogin");
+      if (headerLogin) {
+        headerLogin.style.display = "none";
+      }
+      const logoutButton = document.querySelector<HTMLButtonElement>(".logout");
+      if (logoutButton) {
+        logoutButton.style.display = "block";
+        const { getAuth, connectAuthEmulator } = await import("firebase/auth");
+        const auth = getAuth(app);
+        if (process.env.NODE_ENV === "development") {
+          try {
+            connectAuthEmulator(auth, "http://localhost:9099");
+          } catch (error) {
+            console.log("The emulator was already connected.");
+          }
         }
-        const logoutButton = document.querySelector < HTMLButtonElement > (".logout");
-        if (logoutButton) {
-            logoutButton.style.display = "block";
-            const { getAuth, connectAuthEmulator } = await import("firebase/auth");
-            const auth = getAuth(app);
-            if (process.env.NODE_ENV === 'development') {
-              try {
-                connectAuthEmulator(auth, 'http://localhost:9099');
-              } catch (error) {
-                console.log("The emulator was already connected.");
-              }
-            }
-            logoutButton.addEventListener("click", () => {
-                auth.signOut().then(() => {
-                    // Sign-out successful.
-                    localStorage.removeItem("isLoggedIn");
-                    window.spa.navigate("/login")
-                }).catch((error) => {
-                    // An error happened.
-                    console.log(error);
-                });
+        logoutButton.addEventListener("click", () => {
+          auth
+            .signOut()
+            .then(() => {
+              // Sign-out successful.
+              localStorage.removeItem("isLoggedIn");
+              window.spa.navigate("/login");
+            })
+            .catch((error) => {
+              // An error happened.
+              console.log(error);
             });
-        }
+        });
+      }
     }
-}
-// Handle the authentication state change event
+  }
+  // Handle the authentication state change event
 
-// Call the function on page load
-document.addEventListener("DOMContentLoaded", function (event) {
+  // Call the function on page load
+  document.addEventListener("DOMContentLoaded", function (event) {
     initializePage();
     updateLoginElementsVisibility();
+  });
 
-});
-
-// Call the function on the "mount" event
-window.addEventListener("mount", () => {
+  // Call the function on the "mount" event
+  window.addEventListener("mount", () => {
     initializePage();
     updateLoginElementsVisibility();
-
-});
-
-
-
+  });
 </script>

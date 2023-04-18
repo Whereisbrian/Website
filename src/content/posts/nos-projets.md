@@ -1,6 +1,6 @@
 ---
 title: Nos projets pour l'année à venir
-pubDate: '2023-03-23T00:00:00.000Z'
+pubDate: "2023-03-23T00:00:00.000Z"
 description: Découvrez nos projets ambitieux chez Where Is Brian !
 author: Ulysse & Henri
 tags:

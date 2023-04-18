@@ -1,22 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import WIButton from '../components/WIButton.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import WIButton from "../components/WIButton.astro";
 ---
+
 <meta name="robots" content="noindex" />
 <Layout title="Where Is Brian - Sucess">
-	<main>
-		<h1><span class="text-gradient">Inscription réussie</span></h1>
-		<p class="instructions">
-			Vous pouvez consulter votre boite mail pour confirmer votre inscription.
-		</p>
-		
-        <ul role="list" class="link-card-grid">
-			<Card
-				href="/"
-				title="Accueil"
-				body="Retourner à l'accueil"
-			/>
-		</ul>
-	</main>
+  <main class="max-w-2xl animate-in fade-in duration-1000">
+    <h1><span class="text-gradient">Inscription réussie</span></h1>
+    <p class="instructions">
+      Vous pouvez consulter votre boite mail pour confirmer votre inscription.
+    </p>
+
+    <ul role="list" class="link-card-grid">
+      <Card href="/" title="Accueil" body="Retourner à l'accueil" />
+    </ul>
+  </main>
 </Layout>

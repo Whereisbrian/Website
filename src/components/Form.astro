@@ -1,51 +1,63 @@
 ---
 export interface Props {
-  signup? : boolean;
+  signup?: boolean;
 }
 const { signup } = Astro.props;
 ---
-{signup && (
+
+{
+  signup && (
     <>
-    <input type="text" placeholder="Nom" class="name"/>
-    <input type="text" placeholder="Prénom" class="firstname"/>
+      <input
+        type="text"
+        placeholder="Nom"
+        class="name my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      />
+
+      <input
+        type="text"
+        placeholder="Prénom"
+        class="firstname my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      />
     </>
-    )}
-<input type="text" placeholder="Adresse email" class="email"/>
-<input type="password" placeholder="Mot de passe" class="password"/>
-{signup && (
+  )
+}
+<input
+  type="text"
+  placeholder="Adresse email"
+  class="email my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+/>
+
+<input
+  type="password"
+  placeholder="Mot de passe"
+  class="password my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+/>
+
+{
+  signup && (
     <>
-    <input type="password" placeholder="Confirmer le mot de passe" class="password-confirm"/>
-    <label for="english-level">Niveau d'anglais</label>
-    <select name="english-level" id="english-level" class="english-level">
+      <input
+        type="password"
+        placeholder="Confirmer le mot de passe"
+        class="password-confirm my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white
+         "
+      />
+
+      <label for="english-level" class="my-2 block">
+        Niveau d'anglais
+      </label>
+      <select
+        name="english-level"
+        id="english-level"
+        class="english-level my-2 block rounded border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+      >
         <option value="basic">Basique</option>
         <option value="B1">B1</option>
         <option value="B2">B2</option>
         <option value="C1">C1</option>
         <option value="C2">C2</option>
-    </select>
+      </select>
     </>
-    )}
-<style>
-
-input {
-	display: block;
-	margin: 0.5rem 0;
-	padding: 0.5rem;
-	border: 1px solid rgba(var(--accent), 25%);
-	border-radius: 0.4rem;
+  )
 }
-
-input:focus {
-  outline: none;
-  border-color: rgba(var(--accent), 50%);
-}
-
-select {
-  display: block;
-  margin: 0.5rem 0;
-  padding: 0.5rem;
-  border: 1px solid rgba(var(--accent), 25%);
-  border-radius: 0.4rem;
-}
-
-</style>

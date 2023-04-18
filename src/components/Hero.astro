@@ -1,0 +1,48 @@
+---
+import Arrow from "./Arrow.astro";
+---
+
+<div
+  class="hero flex h-[calc(100vh-5.5rem)] w-full flex-col items-center justify-center"
+>
+  <h1 class="text-4xl animate-in slide-in-from-bottom sm:text-5xl">
+    Where Is Brian
+  </h1>
+  <h2 class="mt-4 text-center text-xl animate-in zoom-in duration-300">
+    La <span class="text-gradient">meilleure</span> association pour apprendre l'anglais
+  </h2>
+  <div
+    class="mt-8 flex w-full flex-row items-center justify-center animate-in zoom-in duration-700"
+  >
+    <div class="flex flex-col items-center">
+      <img
+        src="/training.svg"
+        class="mx-12 h-12 w-12 dark:invert sm:mx-28 sm:h-28 sm:w-28"
+        alt="Exercices icon"
+      />
+      <span class="text-gradient sm:text-2xl"><b>Exercices</b></span>
+    </div>
+    <div class="flex flex-col items-center">
+      <img
+        src="/language.svg"
+        class="mx-12 h-12 w-12 dark:invert sm:mx-28 sm:h-28 sm:w-28"
+        alt="Language icon"
+      />
+      <span class="text-gradient sm:text-2xl"><b>Cours</b></span>
+    </div>
+    <div class="flex flex-col items-center">
+      <img
+        src="/groups.svg"
+        class="mx-12 h-12 w-12 dark:invert sm:mx-28 sm:h-28 sm:w-28"
+        alt="Groups icon"
+      />
+      <span class="text-gradient sm:text-2xl"><b>Sorties</b></span>
+    </div>
+  </div>
+  <a
+    href="/signup"
+    class="mt-8 rounded bg-blue-400 px-4 py-2 text-white transition-all animate-in fade-in slide-in-from-top duration-500 ease-in-out hover:bg-blue-600 sm:mt-16"
+    >Commencer</a
+  >
+  <Arrow href="#section" label="Afficher la section suivante" />
+</div>

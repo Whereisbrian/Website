@@ -1,36 +1,24 @@
 ---
-import WIButton from "../components/WIButton.astro";
+import Switcher from "./Switcher.astro";
 ---
-<header>
-    <a href="/"><img src="/logo.svg" alt="logo" class="logo"/></a>
-    <WIButton title="Connexion" href="/login" customclass={"hlogin"}/>
-    <WIButton title="Blog" href="/blog"/>
-    <img src="/logout.svg" alt="logout" class="logout" style="display: none;"/>
-</header>
-<style lang="scss">
-img {
-  transition: transform 0.3s ease-in-out;
-  
-  &:hover {
-    transform: scale(1.1); // increase the size by 10%
-  }
-}
 
-    header {
-        display: flex;
-    }
-    header .logout {
-        margin-left: auto;
-        margin-right: 1rem;
-        width: 2rem;
-        height: 2rem;
-        margin-top: 1rem;
-        cursor: pointer;
-    }
-    header .logo {
-        width: 3.7rem;
-        height: 3.7rem;
-        margin-left: 1rem;
-        margin-top: 0.5rem;
-    }
-</style>
+<header class="flex items-center">
+  <a href="/"><img src="/logo.svg" alt="logo" class="logo h-16 w-16" /></a>
+  <a
+    href="/login"
+    class="hlogin mr-4 rounded bg-blue-400 px-2 py-2 text-white transition-all duration-500 ease-in-out hover:bg-blue-600 sm:px-4"
+    >Connexion</a
+  >
+  <a
+    href="/blog"
+    class="mr-4 rounded bg-blue-400 px-2 py-2 text-white transition-all duration-500 ease-in-out hover:bg-blue-600 sm:px-4"
+    >Blog</a
+  >
+  <Switcher />
+  <img
+    src="/logout.svg"
+    alt="logout"
+    class="logout m-4 ml-auto h-8 w-8 hover:cursor-pointer dark:invert"
+    style="display: none"
+  />
+</header>

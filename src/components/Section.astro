@@ -1,0 +1,96 @@
+<div
+  id="section"
+  class="sm:md-32 invisible m-8 flex flex-col rounded-lg bg-white outline outline-blue-600 dark:bg-slate-800 sm:flex-row sm:items-center xl:mx-64"
+>
+  <div class="max-sm:rounded-t sm:w-1/2 sm:rounded-l-lg">
+    <h3 class="m-4 text-4xl text-black dark:text-white">Sorties</h3>
+    <p class="m-4 text-justify text-black dark:text-white">
+      Notre but étant d’aider les gens à apprendre l'anglais, nous organisons
+      des sorties avec d’autres membres souhaitant approfondir leur aisance en
+      anglais à l’oral. Nous croyons que l'apprentissage de la langue doit être
+      amusant et interactif, c'est pourquoi nous organisons ces activités
+      culturelles pour pratiquer l'anglais dans des contextes authentiques.
+    </p>
+  </div>
+
+  <div
+    class="flex flex-col items-center max-sm:rounded-b sm:w-1/2 sm:rounded-r-lg"
+  >
+    <img
+      src="/calendar.svg"
+      class="h-32 w-32 invert dark:invert-0"
+      alt="Calendar icon"
+    />
+    <a
+      href="/posts/nos-projets"
+      class="m-4 rounded bg-blue-400 px-4 py-2 font-bold text-white transition-all duration-500 ease-in-out hover:bg-blue-600"
+      >Plus d'informations</a
+    >
+  </div>
+</div>
+
+<div
+  id="section2"
+  class="sm:md-32 invisible m-8 flex flex-col-reverse rounded-lg bg-white outline outline-blue-600 dark:bg-slate-800 sm:flex-row sm:items-center xl:mx-64"
+>
+  <div
+    class="flex flex-col items-center max-sm:rounded-b sm:w-1/2 sm:rounded-l-lg"
+  >
+    <img
+      src="/training.svg"
+      class="h-32 w-32 invert-0 dark:invert"
+      alt="Exercices icon"
+    />
+    <a
+      href="/posts/nos-projets"
+      class="m-4 rounded bg-blue-400 px-4 py-2 font-bold text-white transition-all duration-500 ease-in-out hover:bg-blue-600"
+      >Plus d'informations</a
+    >
+  </div>
+
+  <div class="max-sm:rounded-t sm:w-1/2 sm:rounded-r-lg">
+    <h3 class="m-4 text-4xl text-black dark:text-white">Exercices</h3>
+    <p class="m-4 text-justify text-black dark:text-white">
+      Notre site propose gratuitement des leçons et des exercices pour les
+      personnes cherchant à améliorer leur niveau d'anglais. Nous avons pour
+      objectif de faciliter l'apprentissage de cette langue en la rendant
+      accessible à tous.
+    </p>
+  </div>
+</div>
+<script section-animations>
+  var s1 = document.getElementById("section");
+  var s2 = document.getElementById("section2");
+
+  if (s1) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        s1.classList.add(
+          "animate-in",
+          "slide-in-from-bottom",
+          "zoom-in",
+          "fade-in",
+          "duration-300"
+        );
+        s1.classList.remove("invisible");
+      }
+    });
+    observer.observe(s1);
+  }
+
+  if (s2) {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        s2.classList.add(
+          "animate-in",
+          "slide-in-from-bottom",
+          "zoom-in",
+          "fade-in",
+          "duration-500"
+        );
+        s2.classList.remove("invisible");
+      }
+    });
+    observer.observe(s2);
+  }
+</script>

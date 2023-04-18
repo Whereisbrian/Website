@@ -1,23 +1,26 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/Card.astro';
+import Layout from "../../layouts/Layout.astro";
+import Card from "../../components/Card.astro";
 const allPosts = await getCollection("posts");
 const tags = [...new Set(allPosts.map((post: any) => post.data.tags).flat())];
 const pageTitle = "Tags";
 ---
+
 <meta name="robots" content="noindex" />
 <Layout title={`Where Is Brian - ${pageTitle}`}>
-  <main>
+  <main class="max-w-2xl animate-in fade-in duration-1000">
     <h1>{pageTitle}</h1>
     <ul role="list" class="link-card-grid">
-      {tags.map((tag) => (
-      <Card
+      {
+        tags.map((tag) => (
+          <Card
             href={`/tags/${tag}`}
             title={tag}
             body={`Voir tous les posts avec ${tag}`}
-      /> 
-      ))}
+          />
+        ))
+      }
     </ul>
-</main>
+  </main>
 </Layout>

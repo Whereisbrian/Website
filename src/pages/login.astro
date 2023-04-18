@@ -1,37 +1,24 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-import WIButton from '../components/WIButton.astro';
-import GoogleButton from '../components/GoogleButton.astro';
-import Form from '../components/Form.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import WIButton from "../components/WIButton.astro";
+import SocialLoginButton from "../components/SocialLoginButton.astro";
+import Form from "../components/Form.astro";
 ---
 
 <Layout title="Where Is Brian - Connexion">
-	<main>
-		<h1><span class="text-gradient">Connexion</span></h1>
-		<p class="instructions">
-			Entrez vos identifiants pour vous connecter
-		<Form />
-		<WIButton title="Connexion" customclass="login"/>
-		<GoogleButton title="Connexion" />
-		Vous n'avez pas de compte ? <a href="/signup">Créez-en un</a>
-		</p>
-			
-        <ul role="list" class="link-card-grid">
-			<Card
-				href="/"
-				title="Accueil"
-				body="Retourner à l'accueil"
-			/>
-		</ul>
-	</main>
+  <main class="max-w-2xl animate-in fade-in duration-1000">
+    <h1><span class="text-gradient">Connexion</span></h1>
+    <p class="instructions flex flex-col">
+      Entrez vos identifiants pour vous connecter
+      <Form />
+      <WIButton title="Connexion" customclass="login" />
+      <SocialLoginButton path="/google.svg" />
+      Vous n'avez pas de compte ? <a href="/signup">Créez-en un</a>
+    </p>
+
+    <ul role="list" class="link-card-grid">
+      <Card href="/" title="Accueil" body="Retourner à l'accueil" />
+    </ul>
+  </main>
 </Layout>
-<style>
-.instructions {
-	display: flex;
-	flex-direction: column;
-}
-a {
-	width: fit-content;
-}
-</style>
